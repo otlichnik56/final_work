@@ -1,11 +1,9 @@
 import './App.css'
-import Main from "./components/Main/Main.tsx";
+import AppRoutes from "./AppRoutes.tsx";
 
-function App() {
 
+export default function App() {
   return (
-    <Main/>
+    <AppRoutes/>
   )
 }
-
-export default App
