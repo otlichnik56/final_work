@@ -1,5 +1,5 @@
 export default function Main() {
   return (
-    <div>hello</div>
+    <div>hello, LogIn, Reg, Profile</div>
   )
 }
