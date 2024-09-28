@@ -24,7 +24,6 @@ export default function CourseCard({
       onClick={() => console.log(`Navigating to /course/${courseId}`)}
       className="relative w-[360px] h-[501px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
       style={{
-        top: '250px',
         left: '0px',
         padding: '0px 0px 15px 0px',
         gap: '40px',
