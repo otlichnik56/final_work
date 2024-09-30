@@ -1,10 +1,9 @@
-import './App.css'
-import Main from "./components/Main/Main.tsx";
+import CoursesPage from './pages/coursePage/coursePage.tsx'
 
 function App() {
 
   return (
-    <Main/>
+    <CoursesPage/>
   )
 }
 
