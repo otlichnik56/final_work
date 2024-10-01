@@ -1,5 +1,6 @@
 export default function Main() {
   return (
-    <div>hello, LogIn, Reg, Profile</div>
+    <div className="text-3xl font-bold underline">hello, LogIn, Reg, Profile!!!!</div>
+    
   )
 }
