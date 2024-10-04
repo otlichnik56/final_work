@@ -1,19 +1,26 @@
-import Button from '../Button/Button';
+import { Link } from "react-router-dom";
+import logoImg from "/public/img/logo.svg";
+import ButtonHeader from "../ButtonHeader/ButtonHeader";
+import { path } from "../../paths";
 
-function Header() {
+export default function Header() {
+
   return (
-    <header className="flex justify-between">
-      <div className="flex flex-col gap-[14px]">
-        <button 
-          className="w-[223px] h-[35px] bg-[url('./src/components/Header/img/logo.svg')] bg-white border-none">
-        </button>
-        <span className="text-[18px] font-normal leading-[19.8px] text-left text-logo_grey md: hidden">
+    <div className="flex justify-between mx-auto py-10 md:pt-[50px] md:pb-14 lg:max-w-[1440px] w-full main:px-[140px]">
+      <div>
+        <Link to="/">
+          <img src={logoImg} className="w-[220px] h-[35px]" alt="logo" />
+        </Link>
+        <p className="font-roboto-400 text-[18px] leading-[20px] hidden md:block pt-3.5 text-[#585959]">
           Онлайн-тренировки для занятий дома
-        </span>
+        </p>
       </div>
-      <Button text={'Войти'} />
-    </header>
+
+      <div className="w-[83px] md:w-[103px]">
+        <Link to={path.LOGIN}>
+          <ButtonHeader title="Войти" />
+        </Link>
+      </div>
+    </div>
   );
 }
-
-export default Header;

@@ -1,10 +1,8 @@
-import CoursesPage from './pages/coursePage/coursePage.tsx'
+import AppRoutes from "./AppRoutes.tsx";
 
-function App() {
 
+export default function App() {
   return (
-    <CoursesPage/>
+    <AppRoutes/>
   )
 }
-
-export default App

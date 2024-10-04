@@ -1,14 +1,17 @@
-type ButtonProps = {
-  text: string,
-}
+export type ButtonProps = {
+  title?: string;
+  onClick?: () => void;
+  type?: "submit";
+};
 
-
-function Button({ text }: ButtonProps) {
+export function Button({ title, onClick, type }: ButtonProps) {
   return (
-    <button className="bg-[rgba(188,236,48,1)] rounded-[46px] border-none px-[26px] py-[16px] md:text-[18px] text-[16px] h-[52px] md:leading-[20px] leading-[16.7px]">
-      {text}
+    <button
+      onClick={onClick}
+      type={type}
+      className="justify-self-center font-roboto-400  rounded-full w-full h-[52px] px-5 bg-lime text-lg text-black hover:bg-limeHover active:bg-black active:text-white cursor-custom"
+    >
+      {title}
     </button>
   );
 }
-
-export default Button;
