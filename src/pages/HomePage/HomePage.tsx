@@ -1,72 +1,16 @@
 import CourseCard from '../../components/CourseCard/CourseCard';
 import { Button } from '../../components/Button/Button';
-import { CourseType } from '../../types';
+import {CourseProp} from '../../types';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Wrapper from '../../components/Wrapper/Wrapper';
 import noticeImg from '../../../public/img/notice.png';
-import yogaImg from '../../../public/img/Yoga.png';
-import stretchingImg from '../../../public/img/Stretching.png';
-import danceFitnessImg from '../../../public/img/DanceFitness.png';
-import stepAirobicImg from '../../../public/img/StepAirobic.png';
-import bodyFlexImg from '../../../public/img/BodyFlex.png';
 
+type Props = {
+  courses: CourseProp[] | null;
+}
 
-type CoursesArrayType = [string, CourseType][];
-
-export default function HomePage() {
-  const courses: CoursesArrayType = [
-    ['course1', {
-      _id: '1',
-      nameEN: yogaImg,
-      nameRU: 'Йога',
-      description: '',
-      directions: [],
-      fitting: [],
-      order: 0,
-      workouts: []
-    }],
-    ['course2', {
-      _id: '2',
-      nameEN: stretchingImg,
-      nameRU: 'Стретчинг',
-      description: '',
-      directions: [],
-      fitting: [],
-      order: 0,
-      workouts: []
-    }],
-    ['course3', {
-      _id: '3',
-      nameEN: danceFitnessImg,
-      nameRU: 'Зумба',
-      description: '',
-      directions: [],
-      fitting: [],
-      order: 0,
-      workouts: []
-    }],
-    ['course4', {
-      _id: '4',
-      nameEN: stepAirobicImg,
-      nameRU: 'Стэп-аэробика',
-      description: '',
-      directions: [],
-      fitting: [],
-      order: 0,
-      workouts: []
-    }],
-    ['course5', {
-      _id: '5',
-      nameEN: bodyFlexImg,
-      nameRU: 'Бодифлекс',
-      description: '',
-      directions: [],
-      fitting: [],
-      order: 0,
-      workouts: []
-    }],
-  ];
+export default function HomePage({courses}: Props) {
 
   return (
     <Wrapper>
@@ -84,7 +28,7 @@ export default function HomePage() {
         </div>
 
         <div className="flex md:justify-center lg:justify-start flex-wrap md:gap-y-10 gap-x-10">
-          {courses.map(([_, course]) => (
+          {courses && courses.map((course) => (
             <CourseCard
               key={course._id}
               courseId={course._id}

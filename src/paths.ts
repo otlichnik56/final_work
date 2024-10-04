@@ -1,6 +1,6 @@
 export const path = {
   HOME: "/",
-  COURSE: "/course",
+  COURSE: "/course/:id",
   WORKOUT: "/workout",
   PROFILE: "",
   LOGIN: "/signin",
