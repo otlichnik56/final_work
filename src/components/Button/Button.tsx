@@ -15,5 +15,3 @@ export function Button({ title, onClick, type }: ButtonProps) {
     </button>
   );
 }
-
-export default Button;

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Button } from '../Button/Button';
-//import WorkoutProgress from '../WorkoutProgress/WorkoutProgress';
-import { CourseType } from '../../types/courses';
+import WorkoutProgress from '../WorkoutProgress/WorkoutProgress';
+import { CourseType } from '../../types';
 
 type CourseCardType = {
   imgURL: string;
@@ -84,8 +84,7 @@ export default function CourseCard({
         </div>
         {progress && (
           <div className="flex flex-col gap-10">
-            {/* 
-            <WorkoutProgress title="Прогресс" progress={progress} /> */}
+            <WorkoutProgress title="Прогресс" progress={progress} />
             <Link
               onClick={e => e.stopPropagation()}
               to={`/selection/${courseId}`}
