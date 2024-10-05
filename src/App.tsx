@@ -1,11 +1,9 @@
-import './App.css'
-import Main from "./components/Main/Main.tsx";
+import "./App.css";
+
+import { AppRoutes } from "./components/Routes/Routes.tsx";
 
 function App() {
-
-  return (
-    <Main/>
-  )
+  return <AppRoutes />;
 }
 
-export default App
+export default App;
