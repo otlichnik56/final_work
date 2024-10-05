@@ -63,7 +63,7 @@ export function CoursesPage({courses}: Props) {
           <div className="flex flex-col md:flex-row gap-[17px]">
             {course?.fitting.map((el, i) => {
               return (
-                <div key={i} className="p-[20px] w-fit h-[141] bg-black rounded-[30px] flex flex-row gap-[15px] md:gap-[25px] items-center">
+                <div key={i} className="p-[20px] w-fit h-[141px] bg-black rounded-[30px] flex flex-row gap-[15px] md:gap-[25px] items-center">
                   <p className="text-lime font-roboto-500 text-7xl">{i + 1}</p>
                   <p className="text-lg lg:text-2xl text-white">{el}</p>
                 </div>
@@ -71,6 +71,7 @@ export function CoursesPage({courses}: Props) {
             })}
           </div>
         </section>
+
         <section className="z-10">
           <h2 className="font-roboto-500 font-semibold text-black text-4xl md:text-5xl mb-[24px] lg:mb-[40px]">
             Направления
@@ -85,6 +86,7 @@ export function CoursesPage({courses}: Props) {
             })}
           </ul>
         </section>
+
         <section className="z-10 mt-[156px] xl:mt-[102px] md:mt-[256px]">
           <div className="rounded-[30px] p-[40px] md:p-[30px] lg:p-10 bg-white shadow-def">
             <div className="max-w-[465px] flex flex-col xl:relative xl:z-20">
@@ -111,20 +113,18 @@ export function CoursesPage({courses}: Props) {
                 </ul>
               </div>
             </div>
-            <div
-              className="relative xl:z-10 -z-10 flex justify-end
+
+            <div className="relative xl:z-10 -z-10 flex justify-end
               xl:bottom-[550px] md:bottom-[730px] bottom-[700px]
               lg:left-[30px] md:left-[0px] left-[60px]"
             >
-              <img
-                className="[clip:rect(auto,auto,390px,auto)] lg:[clip:rect(auto,auto,450px,auto)] right-[35px] top-[195px]
+              <img className="[clip:rect(auto,auto,390px,auto)] lg:[clip:rect(auto,auto,450px,auto)] right-[35px] top-[195px]
                 md:-right-[10px] md:top-[140px] absolute
                 xl:-right-[40px] xl:top-[140px] lg:-right-[30px] lg:top-[130px] "
                 src="/img/lines.svg"
                 alt="green and black line"
               />
-              <img
-                className="absolute w-[519px] h-[543px]"
+              <img className="absolute w-[519px] h-[543px]"
                 src="/img/runner.png"
                 alt="runner"
               />
