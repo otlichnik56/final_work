@@ -38,8 +38,8 @@ export function CoursesPage({courses}: Props) {
 
   return (
     <>
-      <Header />
       <Wrapper>
+        <Header />
         <div
           id="notification-box"
           className="flex fixed flex-col items-center justify-center top-0 z-50 p-3"
