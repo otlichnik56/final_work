@@ -1,4 +1,4 @@
-import Button from '../Button/Button';
+import { Button } from '../Button/Button';
 
 function BenefitsCourse() {
   return (
@@ -12,7 +12,7 @@ function BenefitsCourse() {
           <li className="md:text-[24px] text-[18px] font-normal md:leading-[35px] leading-[25px] text-[#666666]">упражнения заряжают бодростью</li>
           <li className="md:text-[24px] text-[18px] font-normal md:leading-[35px] leading-[25px] text-[#666666]">помогают противостоять стрессам</li>
         </ul>
-        <Button text={'Войдите, чтобы добавить курс'} />
+        <Button title="Войдите, чтобы добавить курс" />
       </div>
       <div
         className="absolute h-[575px] w-[628px] bg-[url('./src/components/BenefitsCourse/img/benefitsImg.svg')] hidden md:block"
