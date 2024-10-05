@@ -1,23 +1,29 @@
-import { Routes, Route } from "react-router-dom";
-import { paths } from "./lib/paths";
-import LoginPage from "./pages/LoginPage";
-import RegisterPage from "./pages/RegisterPage";
-import ResetPage from "./pages/ResetPage";
-import NewPasswordPage from "./pages/NewPasswordPage";
-import CoursesPage from "./pages/CoursesPage/CoursesPage";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
+import {CoursesPage} from "./pages/CoursesPage/CoursesPage.tsx";
+import {path} from "./paths.ts";
+import {useEffect, useState} from "react";
+import {CourseProp} from "./types.ts";
+import {getCourses} from "./api/ApiCourses.ts";
 
-const AppRoutes = () => {
+export default function AppRoutes() {
+
+    const [courses, setCourses] = useState<CourseProp[] | null>([]);
+
+    useEffect(() => {
+      const getDataCourses = async () => {
+        const res = await getCourses();
+        setCourses(res);
+      };
+      getDataCourses();
+    }, []);
+
   return (
-    <Routes>
-      <Route path={paths.LOGIN} element={<LoginPage />} />
-      <Route path={paths.REGISTER} element={<RegisterPage />} />
-      <Route path={paths.RESET} element={<ResetPage />} />
-      <Route path={paths.NEWPASSWORD} element={<NewPasswordPage />} />
-      <Route path={paths.HOME} element={<HomePage />} />
-      <Route path={paths.COURSE} element={<CoursesPage />} />
-    </Routes>
+    <BrowserRouter>
+      <Routes>
+        <Route path={path.HOME} element={<HomePage courses={courses}/>}/>
+        <Route path={path.COURSE} element={<CoursesPage courses={courses} />} />
+      </Routes>
+    </BrowserRouter>
   );
-};
-
-export default AppRoutes;
+}
