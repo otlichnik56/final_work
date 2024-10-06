@@ -1,9 +1,11 @@
+import { WorkoutType } from "./workout";
+
 export type UserType = {
-  id: number;
-  username: string;
-  first_name: string;
-  last_name: string;
+  uid: string;
   email: string;
+  name: string;
+  courses: string[]; // Массив ID курсов
+  workouts: WorkoutType[]; // Массив объектов типа WorkoutType
 };
 
 export type LoginType = {

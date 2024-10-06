@@ -7,6 +7,7 @@ import ResetPage from "./pages/ResetPage";
 import NewPasswordPage from "./pages/NewPasswordPage";
 import CoursesPage from "./pages/CoursesPage/CoursesPage";
 import HomePage from "./pages/HomePage/HomePage";
+import WorkoutPage from "./pages/WorkoutPage/WorkoutPage";
 import { CourseType } from './types/courses';
 import { getCourses } from "./api/apiCourse";
 
@@ -31,6 +32,7 @@ export const AppRoutes = () => {
       <Route path={paths.NEWPASSWORD} element={<NewPasswordPage />} />
       <Route path={paths.HOME} element={<HomePage courses={courses}/>} />
       <Route path={paths.COURSE} element={<CoursesPage courses={courses}/>} />
+      <Route path={paths.WORKOUT} element={<WorkoutPage/>} />
     </Routes>
   );
 }

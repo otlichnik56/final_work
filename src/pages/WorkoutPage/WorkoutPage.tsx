@@ -2,7 +2,7 @@ import { Button } from "../../components/Button/Button";
 import WorkoutProgress from "../../components/WorkoutProgress/WorkoutProgress.tsx";
 import Wrapper from "../../components/Wrapper/Wrapper";
 
-export function WorkoutPage() {
+export default function WorkoutPage() {
   return (
     <Wrapper>
       <section>

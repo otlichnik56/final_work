@@ -8,5 +8,5 @@ export const paths = {
   RESET: "/reset",
   NEWPASSWORD:"/newpassword",
   COURSE:"/course/:id",
-  WORKOUT: "/workout/:id"
+  WORKOUT: "/workout"
 }

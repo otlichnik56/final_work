@@ -5,6 +5,7 @@ import { UserContext } from "../../context/UserContext"; // Импорт кон�
 import ButtonHeader from "../ButtonHeader/ButtonHeader";
 import { paths } from "../../lib/paths";
 
+
 export default function Header() {
   
   const [isOpen, setIsOpen] = useState(false); // Состояние для открытия/закрытия блока
@@ -51,14 +52,14 @@ export default function Header() {
       {/* Отображаем имя пользователя */}
       <div className="relative">
         <button onClick={() => setIsOpen(!isOpen)} className="flex items-center space-x-2">
-          <span className="text-lg font-semibold">{userData.displayName || "Пользователь"}</span>
+          <span className="text-lg font-semibold">{userData.name || "Пользователь"}</span>
         </button>
 
         {/* Выпадающий блок */}
         {isOpen && (
           <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg p-4 z-10">
             <div className="text-center">
-              <p className="font-semibold text-lg">{userData.displayName}</p>
+              <p className="font-semibold text-lg">{userData.name}</p>
               <p className="text-gray-500 text-sm">{userData.email}</p>
             </div>
             <div className="mt-4 space-y-2">
