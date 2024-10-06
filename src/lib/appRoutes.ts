@@ -5,5 +5,8 @@ export const Paths = {
   EXIT: "/exit",
   NOT_FOUND: "*",
   RESET: "/reset",
-  NEWPASSWORD:"/newpassword"
+  NEWPASSWORD:"/newpassword",
+  PROGRESS:"/progress",
+  PROGRESSDONE:"/progressDone",
+  PROFILE:"/profile"
 };

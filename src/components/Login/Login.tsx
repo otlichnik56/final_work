@@ -58,7 +58,7 @@ const Login = () => {
         <div className="h-screen flex items-center">
           <div className="block bg-white w-[360px] h-[425px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[60px] py-[50px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
             <div className="">
-              <img src="../../../public/img/logo_modal.png" alt="logo_modal" />
+              <img className="mx-auto" src="../../../public/img/logo_modal.png" alt="logo_modal" />
             </div>
 
             <div
