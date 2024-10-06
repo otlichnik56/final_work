@@ -82,7 +82,7 @@ export async function handlePasswordReset(email: string) {
 
 
 
-/**
+
 export async function changePassword(password: string) {
   try {
     if (!auth.currentUser) {
@@ -92,4 +92,4 @@ export async function changePassword(password: string) {
   } catch (error) {
     if (error instanceof Error) throw new Error(error.message);
   }
-}*/
+}

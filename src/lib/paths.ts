@@ -7,6 +7,6 @@ export const paths = {
   NOT_FOUND: "/not_found*",
   RESET: "/reset",
   NEWPASSWORD:"/newpassword",
-  COURSE:"/course",
-  WORKOUT: "/workout"
+  COURSE:"/course/:id",
+  WORKOUT: "/workout/:id"
 }

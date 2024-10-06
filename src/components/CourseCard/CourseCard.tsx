@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { Button } from '../Button/Button';
-//import WorkoutProgress from '../WorkoutProgress/WorkoutProgress';
+import WorkoutProgress from '../WorkoutProgress/WorkoutProgress';
 import { CourseType } from '../../types/courses';
 
 type CourseCardType = {
@@ -20,19 +20,17 @@ export default function CourseCard({
                                      title,
                                    }: CourseCardType) {
   return (
-    <div
-      onClick={() => console.log(`Navigating to /course/${courseId}`)}
-      className="relative w-[360px] h-[501px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
-      style={{
-        left: '0px',
-        padding: '0px 0px 15px 0px',
-        gap: '40px',
-      }}
+    <Link to={`/course/${courseId}`}
+         className="relative w-[360px] h-[501px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
+         style={{
+           padding: '0px 0px 15px 0px',
+           gap: '40px',
+         }}
     >
       <div title="">
         <img
           className="rounded-[30px] h-[325px] w-full object-cover"
-          src={imgURL}
+          src={`/img/${imgURL}.png`}
           alt={title}
           width={360}
           height={325}
@@ -59,7 +57,7 @@ export default function CourseCard({
         )}
       </div>
       <div className="flex flex-col px-[30px] pt-6 pb-4 gap-y-[18px]">
-        <h2 className="font-roboto-500 text-[24px] lg:text-[32px] leading-8">
+        <h2 className="font-roboto-500 text-[24px] lg:text-[28px] leading-8">
           {title}
         </h2>
         <div className="flex flex-wrap gap-1.5">
@@ -86,8 +84,7 @@ export default function CourseCard({
         </div>
         {progress && (
           <div className="flex flex-col gap-10">
-            {/* 
-            <WorkoutProgress title="Прогресс" progress={progress} /> */}
+            <WorkoutProgress title="Прогресс" progress={progress} />
             <Link
               onClick={e => e.stopPropagation()}
               to={`/selection/${courseId}`}
@@ -97,6 +94,6 @@ export default function CourseCard({
           </div>
         )}
       </div>
-    </div>
+    </Link>
   );
 }

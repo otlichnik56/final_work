@@ -63,13 +63,13 @@ export default function Header() {
             </div>
             <div className="mt-4 space-y-2">
               <Link to={paths.PROFILE}>
-                <button className="w-full bg-lime-500 text-white py-2 px-4 rounded-lg">
+                <button className="w-full border border-black bg-lime text-black py-2 px-4 rounded-lg z-20">
                   Мой профиль
                 </button>
               </Link>
               <button
                 onClick={handleLogout}
-                className="w-full border border-black text-black py-2 px-4 rounded-lg"
+                className="w-full border border-black text-black py-2 px-4 rounded-lg z-20"
               >
                 Выйти
               </button>
