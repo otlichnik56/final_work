@@ -10,7 +10,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import { CourseType } from './types/courses';
 import { getCourses } from "./api/apiCourse";
 
-const AppRoutes = () => {
+export const AppRoutes = () => {
 
   const [courses, setCourses] = useState<CourseType[] | null>([]);
 
@@ -33,6 +33,6 @@ const AppRoutes = () => {
       <Route path={paths.COURSE} element={<CoursesPage courses={courses}/>} />
     </Routes>
   );
-};
+}
 
 export default AppRoutes;

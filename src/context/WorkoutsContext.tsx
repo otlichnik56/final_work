@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { WorkoutType } from "../types/workout";
+import { WorkoutType } from "../types/workout.ts";
 
 type ProviderProps = {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ type ContextWorckoutsType = {
   setError: (prevState: string | null) => void;
 };
 
-export const WorckoutsContext = createContext<ContextWorckoutsType | null>(null);
+export const WorkoutsContext = createContext<ContextWorckoutsType | null>(null);
 
 export default function WorckoutsProvider({ children }: ProviderProps) {
   const [workouts, setWorkouts] = useState<WorkoutType[]>([]);
@@ -22,10 +22,10 @@ export default function WorckoutsProvider({ children }: ProviderProps) {
   const [error, setError] = useState<string | null>(null);
 
   return (
-    <WorckoutsContext.Provider
+    <WorkoutsContext.Provider
       value={{ workouts, setWorkouts, loading, setLoading, error, setError }}
     >
       {children}
-    </WorckoutsContext.Provider>
+    </WorkoutsContext.Provider>
   );
 }

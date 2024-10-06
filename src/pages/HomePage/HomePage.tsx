@@ -1,6 +1,6 @@
 import CourseCard from '../../components/CourseCard/CourseCard';
 import { Button } from '../../components/Button/Button';
-import {CourseProp} from '../../types';
+import {CourseType} from '../../types/courses';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Wrapper from '../../components/Wrapper/Wrapper';
@@ -10,7 +10,6 @@ type Props = {
   courses: CourseType[] | null;
 }
 
-export default function HomePage({courses}: Props) {
 export default function HomePage({courses}: Props) {
 
   return (
@@ -29,7 +28,6 @@ export default function HomePage({courses}: Props) {
         </div>
 
         <div className="flex md:justify-center lg:justify-start flex-wrap md:gap-y-10 gap-x-10">
-          {courses && courses.map((course) => (
           {courses && courses.map((course) => (
             <CourseCard
               key={course._id}

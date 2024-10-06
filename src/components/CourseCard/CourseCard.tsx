@@ -19,13 +19,8 @@ export default function CourseCard({
                                      imgURL,
                                      title,
                                    }: CourseCardType) {
+
   return (
-    <Link to={`/course/${courseId}`}
-         className="relative w-[360px] h-[501px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
-         style={{
-           padding: '0px 0px 15px 0px',
-           gap: '40px',
-         }}
     <Link to={`/course/${courseId}`}
          className="relative w-[360px] h-[501px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
          style={{
@@ -36,7 +31,6 @@ export default function CourseCard({
       <div title="">
         <img
           className="rounded-[30px] h-[325px] w-full object-cover"
-          src={`/img/${imgURL}.png`}
           src={`/img/${imgURL}.png`}
           alt={title}
           width={360}
@@ -65,7 +59,6 @@ export default function CourseCard({
       </div>
       <div className="flex flex-col px-[30px] pt-6 pb-4 gap-y-[18px]">
         <h2 className="font-roboto-500 text-[24px] lg:text-[28px] leading-8">
-        <h2 className="font-roboto-500 text-[24px] lg:text-[28px] leading-8">
           {title}
         </h2>
         <div className="flex flex-wrap gap-1.5">
@@ -93,7 +86,6 @@ export default function CourseCard({
         {progress && (
           <div className="flex flex-col gap-10">
             <WorkoutProgress title="Прогресс" progress={progress} />
-            <WorkoutProgress title="Прогресс" progress={progress} />
             <Link
               onClick={e => e.stopPropagation()}
               to={`/selection/${courseId}`}
@@ -103,7 +95,6 @@ export default function CourseCard({
           </div>
         )}
       </div>
-    </Link>
     </Link>
   );
 }
