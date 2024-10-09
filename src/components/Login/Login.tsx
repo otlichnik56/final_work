@@ -1,34 +1,32 @@
-import { Paths } from "../../lib/appRoutes";
+import { paths } from "../../lib/paths";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { loginUser } from "../../api";
-import { useUser } from "../../hooks/userUser";
+import { loginUser } from "../../api/apiUser";
+import { useUser } from "../../hooks/useUser";
 import React from "react";
+//import { useForm } from "react-hook-form";
 
 const Login = () => {
   const { setUser } = useUser();
   const navigate = useNavigate();
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+
+  /* const {formState: { errors }} = useForm(); */
 
   const [formValues, setFormValues] = useState({
-    login: "",
+    email: "",
     password: "",
   });
-  /* 
-  const onInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormValues({ ...formValues, [name]: value });
-  }; */
 
-  const onInputChange: React.ComponentProps<"input">["onChange"] = (event) => {
+  const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name, value } = event.target;
     setFormValues({ ...formValues, [name]: value });
   };
 
-  const onLogin = async (event) => {
+  const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!formValues.login) {
+    if (!formValues.email) {
       setError("Введите адрес электронной почты");
       return;
     }
@@ -40,15 +38,17 @@ const Login = () => {
 
     try {
       const response = await loginUser({
-        login: formValues.login,
+        email: formValues.email,
         password: formValues.password,
       });
 
       setError(null);
-      setUser(response.user);
-      navigate(Paths.MAIN);
-    } catch (error) {
-      setError(error.message);
+      setUser(response);
+      //console.log(response.workouts);
+      navigate(paths.HOME);
+    } catch (error: any) {
+      setError("Не верный пароль");
+      //console.log(error.message);
     }
   };
 
@@ -58,24 +58,24 @@ const Login = () => {
         <div className="h-screen flex items-center">
           <div className="block bg-white w-[360px] h-[425px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[60px] py-[50px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
             <div className="">
-              <img className="mx-auto" src="../../../public/img/logo_modal.png" alt="logo_modal" />
+              <img src="../../../public/img/logo_modal.png" alt="logo_modal" />
             </div>
 
-            <div
+            <form
               className="w-full flex flex-col items-center justify-center pt-[42px]"
               onSubmit={onLogin}
             >
               <div className="gap-2.5">
-                <input
+                <input /* style={errors && { border: "2px solid red" }} */
                   className="h-[52px] w-[280px] gap-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid border-[rgba(148,166,190,0.4)] first:mb-2.5 placeholder:font-normal placeholder:text-lg 
                  placeholder:text-[#94a6be] focus:outline-none"
-                  type="text"
-                  value={formValues.login}
-                  placeholder="Логин"
-                  name="login"
+                  type="email"
+                  value={formValues.email}
+                  placeholder="Электронная почта"
+                  name="email"
                   onChange={onInputChange}
-                ></input>
-                <input
+                />
+                <input /* style={errors && { border: "2px solid red" }} */
                   className="h-[52px] w-[280px] gap-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid border-[rgba(148,166,190,0.4)] first:mb-2.5 placeholder:font-normal placeholder:text-lg 
                  placeholder:text-[#94a6be] focus:outline-none"
                   type="password"
@@ -83,15 +83,21 @@ const Login = () => {
                   placeholder="Пароль"
                   value={formValues.password}
                   onChange={onInputChange}
-                ></input>
+                />
               </div>
-              {error && <p>{error}</p>}
+              {error && (
+                <>
+                  <p>{error}</p>
+                  <Link to={paths.RESET} state={{ email: formValues.email }}>
+                    Восстановить пароль?
+                  </Link>
+                </>
+              )}
               <button
                 className="w-[280px] h-[52px] bg-[#BCEC30] flex items-center justify-center text-sm leading-[19.8px] font-normal tracking-[-0.14px] text-black mt-8 mb-2.5 rounded-[46px] border-[none]
   outline: none hover:border-[none] hover:bg-[#C6FF00] active:bg-[#000000] active:text-white"
                 id="btnEnter"
                 type="submit"
-                onClick={onLogin}
               >
                 Войти
               </button>
@@ -99,13 +105,13 @@ const Login = () => {
                 <Link
                   className="h-[52px] w-[280px] border-solid border border-black text-black flex items-center justify-center bg-white rounded-[46px] hover:bg-[#F7F7F7] active:bg-[#E9ECED]"
                   id="btnEnter"
-                  type="submit"
-                  to={Paths.REGISTER}
+                  type="button"
+                  to={paths.REGISTER}
                 >
                   Зарегистрироваться
                 </Link>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

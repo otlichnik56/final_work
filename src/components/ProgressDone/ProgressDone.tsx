@@ -8,7 +8,7 @@ const ProgressDone = () => {
               <h1 className="text-[40px] pb-[34px] text-[black] font-semibold leading-[48px] text-center font-family: StratosSkyeng">Ваш прогресс засчитан!</h1>
             </div>
             <div className="w-[346px] h-[96px] ">
-            <img className="mx-auto" src="../../../public/img/Check-in-Circle.png" alt="logo_modal" />
+            <img className="mx-auto" src="/img/Check-in-Circle.png" alt="logo_modal" />
             </div>
           </div>
         </div>
