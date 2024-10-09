@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { paths } from "../../lib/paths";
 
-
 export default function Profile() {
   return (
     <div className="">
