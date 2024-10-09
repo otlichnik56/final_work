@@ -1,0 +1,45 @@
+import { initializeApp } from "firebase/app";
+import  { getAuth } from "firebase/auth";
+
+// Web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyAyFflDKb1UUhfVGHOAiPyPg_q-Wup6iRQ",
+    authDomain: "backforcourseweb.firebaseapp.com",
+    databaseURL: "https://backforcourseweb-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "backforcourseweb",
+    storageBucket: "backforcourseweb.appspot.com",
+    messagingSenderId: "925556395917",
+    appId: "1:925556395917:web:72a3a71f4f8c28712137c4"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+export { app, auth };
+
+
+/**
+
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAyFflDKb1UUhfVGHOAiPyPg_q-Wup6iRQ",
+  authDomain: "backforcourseweb.firebaseapp.com",
+  databaseURL: "https://backforcourseweb-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "backforcourseweb",
+  storageBucket: "backforcourseweb.appspot.com",
+  messagingSenderId: "925556395917",
+  appId: "1:925556395917:web:72a3a71f4f8c28712137c4"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+
+*/
