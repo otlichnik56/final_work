@@ -3,7 +3,7 @@ export default {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
-      colors:{
+      colors: {
         background: "#FAFAFA",
         black: "#000000",
         blueDark: "#2491D2",
@@ -26,5 +26,22 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      addUtilities({
+        '.custom-scrollbar': {
+          '&::-webkit-scrollbar': {
+            width: '6px',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            backgroundColor: 'rgba(0, 0, 0, 1)',
+            borderRadius: '10px',
+          },
+          '&::-webkit-scrollbar-track': {
+            backgroundColor: 'rgba(247, 247, 247, 1)',
+          },
+        },
+      });
+    },
+  ],
 };

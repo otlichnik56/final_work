@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import WorkoutPage from "./pages/WorkoutPage/WorkoutPage";
 import { CourseType } from './types/courses';
 import { getCourses } from "./api/apiCourse";
+import WorkoutSelectPage from "./pages/WorkoutSekectPage/WorkoutSekectPage";
 
 export const AppRoutes = () => {
 
@@ -26,7 +27,8 @@ export const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path={paths.LOGIN} element={<LoginPage />} />
+      {/* <Route path={paths.LOGIN} element={<LoginPage />} /> */}
+      <Route path={paths.LOGIN} element={<WorkoutSelectPage />} />
       <Route path={paths.REGISTER} element={<RegisterPage />} />
       <Route path={paths.RESET} element={<ResetPage />} />
       <Route path={paths.NEWPASSWORD} element={<NewPasswordPage />} />
