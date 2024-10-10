@@ -40,10 +40,8 @@ export default function HomePage({courses}: Props) {
           ))}
         </div>
 
-        <div className="flex justify-center mx-[auto] w-[140px] mt-[34px] bg-[#BCEC30] rounded-full">
-          <Link to={'#top'}>
-            <Button title="Наверх &#8593;" />
-          </Link>
+        <div className="flex justify-center mx-[auto] w-[127px] mt-[34px] rounded-full">
+            <Button title="Наверх &#8593;" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} />
         </div>
       </div>
     </Wrapper>
