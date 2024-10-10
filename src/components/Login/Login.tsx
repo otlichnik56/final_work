@@ -26,7 +26,7 @@ const Login = () => {
     event.preventDefault();
 
     if (!formValues.email) {
-      setError("Введите адрес электронной почты");
+      setError("Введите email");
       return;
     }
 
@@ -55,7 +55,7 @@ const Login = () => {
     <div className="w-full h-full overflow-x-hidden bg-[#eaeef6]">
       <div className="block w-screen min-h-screen mx-auto my-0">
         <div className="h-screen flex items-center">
-          <div className="block bg-white w-[360px] h-[425px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[60px] py-[50px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
+          <div className="block bg-white w-[360px] mh-[425px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[60px] py-[50px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
             <div className="">
               <img src="../../../public/img/logo_modal.png" alt="logo_modal" />
             </div>

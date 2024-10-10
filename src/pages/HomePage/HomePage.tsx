@@ -1,7 +1,6 @@
 import CourseCard from '../../components/CourseCard/CourseCard';
 import { Button } from '../../components/Button/Button';
 import {CourseType} from '../../types/courses';
-import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Wrapper from '../../components/Wrapper/Wrapper';
 import noticeImg from '../../../public/img/notice.png';
@@ -22,7 +21,7 @@ export default function HomePage({courses}: Props) {
           <h1 className="mb-[34px] lg:mb-[50px] lg:max-w-[886px] font-roboto font-medium text-[60px] leading-[60px] md:w-[calc(100% - 308px)] main:w-[850px]">
             Начните заниматься спортом и улучшите качество жизни
           </h1>
-          <div className="relative w-[288px] h-[120px]">
+          <div className="md:block md:relative md:w-[288px] md:h-[120px] hidden">
             <img src={noticeImg} alt="Notice" className="absolute inset-0 w-full h-full object-cover" />
           </div>
         </div>

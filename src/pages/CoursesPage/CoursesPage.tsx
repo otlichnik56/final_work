@@ -66,7 +66,7 @@ export default function CoursesPage({courses}: Props) {
           <div className="flex flex-col md:flex-row gap-[17px]">
             {course?.fitting.map((el, i) => {
               return (
-                <div key={i} className="p-[20px] w-fit h-[141px] bg-black rounded-[30px] flex flex-row gap-[15px] md:gap-[25px] items-center">
+                <div key={i} className="p-[20px] w-fit bg-black rounded-[30px] flex flex-row gap-[15px] md:gap-[25px] items-center">
                   <p className="text-lime font-roboto-500 text-7xl">{i + 1}</p>
                   <p className="text-lg lg:text-2xl text-white">{el}</p>
                 </div>
@@ -79,7 +79,7 @@ export default function CoursesPage({courses}: Props) {
           <h2 className="font-roboto-500 font-semibold text-black text-4xl md:text-5xl mb-[24px] lg:mb-[40px]">
             Направления
           </h2>
-          <ul className="bg-lime   rounded-[30px] flex flex-col gap-y-[20px] lg:flex-row flex-wrap md:gap-y-[22px] p-[30px] ">
+          <ul className="bg-lime rounded-[30px] flex flex-col gap-y-[20px] lg:flex-row flex-wrap md:gap-y-[22px] p-[30px] ">
             {course?.directions.map((el, i) => {
               return (
                 <li key={i} className="md:w-1/3  before:content-['\2726'] font-roboto-500 text-lg xl:text-2xl text-black">
@@ -90,8 +90,8 @@ export default function CoursesPage({courses}: Props) {
           </ul>
         </section>
 
-        <section className="z-10 mt-[156px] xl:mt-[102px] md:mt-[256px]">
-          <div className="rounded-[30px] p-[40px] md:p-[30px] lg:p-10 bg-white shadow-def">
+        <section className="z-10 mt-[156px] xl:mt-[102px] md:mt-[256px] br-[30px]">
+          <div className="rounded-[30px] p-[40px] md:p-[30px] lg:p-10 bg-white shadow-custom">
             <div className="max-w-[465px] flex flex-col xl:relative xl:z-20">
               <h2 className="text-[60px] md:text-5xl text-black font-roboto-500 font-semibold leading-none mb-[28px]">
                 Начните путь <br /> к новому телу

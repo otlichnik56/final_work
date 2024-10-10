@@ -24,6 +24,9 @@ export default {
         'roboto-400': 'var(--font-roboto-400)',
         'roboto-500': 'var(--font-roboto-500)',
       },
+      boxShadow: {
+        'custom': '0px 4px 67px -12px rgba(0, 0, 0, 0.13)',
+      },
     },
   },
   plugins: [
