@@ -51,7 +51,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-full overflow-x-hidden">
-      <div className="w-full min-w-[375px] h-full min-h-screen absolute z-[6] left-0 top-0">
+      <div className="w-full min-w-[375px] h-full min-h-screen absolute z-[6] left-0 top-0 bg-[rgba(0,0,0,0.4)]">
         <div className="h-screen flex items-center">
           <div className="block bg-white w-[360px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[60px] py-[50px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
             <div className="">

@@ -38,7 +38,14 @@ export const AppRoutes = () => {
         <Route path={paths.REGISTER} element={<RegisterPage />} />
       </Route>
 
-      <Route path={paths.COURSE} element={<CoursesPage courses={courses} />} />
+      <Route path={paths.COURSE} element={<CoursesPage courses={courses} />}/>
+        {/* <Route path={paths.LOGIN} element={<LoginPage />} />
+      </Route>
+
+      <Route path={paths.COURSE} element={<CoursesPage courses={courses} />}>
+        <Route path={paths.REGISTER} element={<RegisterPage />} />
+      </Route> */}
+
       <Route element={<PrivateRoute />}>
         <Route path={paths.WORKOUT} element={<WorkoutPage />} />
         <Route path={paths.PROFILE} element={<ProfilePage />} />
