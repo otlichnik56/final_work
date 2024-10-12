@@ -5,7 +5,6 @@ import { regUser } from "../../api/apiUser.js";
 import { useUser } from "../../hooks/useUser";
 
 export default function RegisterPage() {
-
   const { setUser } = useUser();
   const navigate = useNavigate();
 
@@ -61,7 +60,7 @@ export default function RegisterPage() {
 
   return (
     <div className="w-full h-full overflow-x-hidden bg-[#eaeef6]">
-      <div className="block w-screen min-h-screen mx-auto my-0">
+      <div className="w-full min-w-[375px] h-full min-h-screen absolute z-[6] left-0 top-0">
         <div className="h-screen flex items-center">
           <div className="block bg-white w-[360px] h-[487] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[60px] pt-[50px] pb-[35px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
             <div className="">
@@ -107,7 +106,7 @@ export default function RegisterPage() {
                 ></input>
               </div>
 
-              {error && <p>{error}</p>}
+              {error && <p className="text-[red] text-center">{error}</p>}
               <button
                 className="w-[280px] h-[52px] bg-[#BCEC30] flex items-center justify-center text-sm leading-[19.8px] font-normal tracking-[-0.14px] text-black mt-8 mb-2.5 rounded-[46px] border-[none]
   outline: none hover:border-[none] hover:bg-[#C6FF00] active:bg-[#000000] active:text-white"
@@ -126,7 +125,6 @@ export default function RegisterPage() {
                 Войти
               </Link>
             </form>
-            
           </div>
         </div>
       </div>
