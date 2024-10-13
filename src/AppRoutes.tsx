@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import WorkoutPage from "./pages/WorkoutPage/WorkoutPage";
 import { CourseType } from './types/courses';
 import { getCourses } from "./api/apiCourse";
+import SelectionPage from "./pages/Selection Page/SelectionPage.tsx";
 
 export const AppRoutes = () => {
 
@@ -33,6 +34,7 @@ export const AppRoutes = () => {
       <Route path={paths.HOME} element={<HomePage courses={courses}/>} />
       <Route path={paths.COURSE} element={<CoursesPage courses={courses}/>} />
       <Route path={paths.WORKOUT} element={<WorkoutPage/>} />
+      <Route path={paths.SELECTION} element={<SelectionPage/>} />
     </Routes>
   );
 }
