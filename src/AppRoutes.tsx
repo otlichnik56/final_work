@@ -38,22 +38,22 @@ export const AppRoutes = () => {
         <Route path={paths.REGISTER} element={<RegisterPage />} />
       </Route>
 
-      <Route path={paths.COURSE} element={<CoursesPage courses={courses} />}/>
-        {/* <Route path={paths.LOGIN} element={<LoginPage />} />
+      <Route path={paths.COURSE} element={<CoursesPage courses={courses} />} />
+      {/* <Route path={paths.LOGIN} element={<LoginPage />} />
       </Route>
 
       <Route path={paths.COURSE} element={<CoursesPage courses={courses} />}>
         <Route path={paths.REGISTER} element={<RegisterPage />} />
       </Route> */}
 
+      <Route path={paths.RESET} element={<ResetPage />} />
+      <Route path={paths.NEWPASSWORD} element={<NewPasswordPage />} />
+
       <Route element={<PrivateRoute />}>
         <Route path={paths.WORKOUT} element={<WorkoutPage />} />
         <Route path={paths.PROFILE} element={<ProfilePage />} />
         <Route path={paths.PROGRESS} element={<ProgressPage />} />
         <Route path={paths.PROGRESSDONE} element={<ProgressDonePage />} />
-
-        <Route path={paths.RESET} element={<ResetPage />} />
-        <Route path={paths.NEWPASSWORD} element={<NewPasswordPage />} />
       </Route>
     </Routes>
   );

@@ -64,8 +64,10 @@ const Login = () => {
             >
               <div className="gap-2.5">
                 <input
-                  className="h-[52px] w-[280px] gap-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid border-[rgba(148,166,190,0.4)] first:mb-2.5 placeholder:font-normal placeholder:text-lg 
-                 placeholder:text-[#94a6be] focus:outline-none"
+                  className={`h-[52px] w-[280px] gap-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid border-[rgba(148,166,190,0.4)] ${
+                    error ? "border-rose-600" : "border-[rgba(148,166,190,0.4)]"
+                  } first:mb-2.5 placeholder:font-normal placeholder:text-lg 
+                 placeholder:text-[#94a6be] focus:outline-none`}
                   type="email"
                   value={formValues.email}
                   placeholder="Электронная почта"
@@ -73,8 +75,10 @@ const Login = () => {
                   onChange={onInputChange}
                 />
                 <input
-                  className="h-[52px] w-[280px] gap-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid border-[rgba(148,166,190,0.4)] first:mb-2.5 placeholder:font-normal placeholder:text-lg 
-                 placeholder:text-[#94a6be] focus:outline-none "
+                  className={`h-[52px] w-[280px] gap-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid border-[rgba(148,166,190,0.4)] ${
+                    error ? "border-rose-600" : "border-[rgba(148,166,190,0.4)]"
+                  } first:mb-2.5 placeholder:font-normal placeholder:text-lg 
+                  placeholder:text-[#94a6be] focus:outline-none`}
                   type="password"
                   name="password"
                   placeholder="Пароль"
