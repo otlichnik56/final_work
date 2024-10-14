@@ -6,6 +6,7 @@ import { useUser } from "../../hooks/useUser";
 import React from "react";
 
 const Login = () => {
+
   const { setUser } = useUser();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
@@ -21,6 +22,7 @@ const Login = () => {
   };
 
   const onLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+
     event.preventDefault();
 
     if (!formValues.email) {
@@ -54,6 +56,7 @@ const Login = () => {
       <div className="w-full min-w-[375px] h-full min-h-screen absolute z-[6] left-0 top-0 bg-[rgba(0,0,0,0.4)]">
         <div className="h-screen flex items-center">
           <div className="block bg-white w-[360px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[60px] py-[50px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
+
             <div className="">
               <img src="../../../public/img/logo_modal.png" alt="logo_modal" />
             </div>
@@ -86,7 +89,6 @@ const Login = () => {
                   onChange={onInputChange}
                 />
               </div>
-
               {error && (
                 <>
                   <p className="text-[red] text-center">{error}</p>

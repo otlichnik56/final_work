@@ -7,4 +7,9 @@ export type WorkoutType = {
     }[];
     name: string;
     video: string;
+
+export type ExerciseType = {
+  name: string;
+  quantity: number;
+  progressWorkout: number;
 };

@@ -5,6 +5,7 @@ import { regUser } from "../../api/apiUser.js";
 import { useUser } from "../../hooks/useUser";
 
 export default function RegisterPage() {
+
   const { setUser } = useUser();
   const navigate = useNavigate();
 
@@ -107,6 +108,7 @@ export default function RegisterPage() {
               </div>
 
               {error && <p className="text-[red] text-center">{error}</p>}
+
               <button
                 className="w-[280px] h-[52px] bg-[#BCEC30] flex items-center justify-center text-sm leading-[19.8px] font-normal tracking-[-0.14px] text-black mt-8 mb-2.5 rounded-[46px] border-[none]
   outline: none hover:border-[none] hover:bg-[#C6FF00] active:bg-[#000000] active:text-white"

@@ -6,7 +6,6 @@ import RegisterPage from "./pages/RegisterPage";
 import ResetPage from "./pages/ResetPage";
 import NewPasswordPage from "./pages/NewPasswordPage";
 import CoursesPage from "./pages/CoursesPage/CoursesPage";
-
 import WorkoutPage from "./pages/WorkoutPage/WorkoutPage";
 import { CourseType } from "./types/courses";
 import { getCourses } from "./api/apiCourse";
@@ -14,10 +13,11 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ProgressPage from "./pages/ProgressPage";
 import ProgressDonePage from "./pages/ProgressDonePage";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
-
 import HomePage from "./pages/HomePage/HomePage";
 
+
 export const AppRoutes = () => {
+
   const [courses, setCourses] = useState<CourseType[] | null>([]);
 
   useEffect(() => {
@@ -27,6 +27,7 @@ export const AppRoutes = () => {
     };
     getDataCourses();
   }, []);
+
 
   return (
     <Routes>

@@ -1,3 +1,4 @@
+
 import CourseCard from "../../components/CourseCard/CourseCard";
 import { Button } from "../../components/Button/Button";
 import { CourseType } from "../../types/courses";
@@ -27,6 +28,7 @@ export default function HomePage({ courses }: Props) {
             Начните заниматься спортом и улучшите качество жизни
           </h1>
           <div className="relative w-[288px] h-[120px]">
+
             <img
               src={noticeImg}
               alt="Notice"
@@ -36,6 +38,7 @@ export default function HomePage({ courses }: Props) {
         </div>
 
         <div className="flex md:justify-center lg:justify-start flex-wrap md:gap-y-10 gap-x-10">
+
           {courses &&
             courses.map((course) => (
               <CourseCard
@@ -58,3 +61,4 @@ export default function HomePage({ courses }: Props) {
     </Wrapper>
   );
 }
+

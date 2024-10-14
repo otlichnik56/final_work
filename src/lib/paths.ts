@@ -10,5 +10,6 @@ export const paths = {
   COURSE:"/course/:id",
   WORKOUT: "/workout",
   PROGRESS:"/progress",
-  PROGRESSDONE:"/progressdone"
+  PROGRESSDONE:"/progressdone",
+  SELECTION: "/selection/:id",
 }
