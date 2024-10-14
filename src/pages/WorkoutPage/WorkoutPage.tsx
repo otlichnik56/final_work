@@ -57,6 +57,9 @@ const WorkoutPage = () => {
     if (total === 0) {
       throw new Error("Total cannot be zero");
     }
+    if (part >= total) {
+      return "100%";
+    }
     const percentage = (part / total) * 100;
     return Math.round(percentage) + "%";
   }
