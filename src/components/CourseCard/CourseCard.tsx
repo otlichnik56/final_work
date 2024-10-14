@@ -6,27 +6,42 @@ import { CourseType } from '../../types/courses';
 type CourseCardType = {
   imgURL: string;
   title: string;
-  isSubscribed: boolean;
+  isSubscribed: boolean | null; // Подписан ли пользователь на курс
   progress?: string;
   courseId: string;
   course?: CourseType;
+  onAddCourse: (courseId: string) => void; // Функция для добавления курса
+  onRemoveCourse: (courseId: string) => void; // Функция для удаления курса
 };
 
 export default function CourseCard({
-                                     courseId,
-                                     progress,
-                                     isSubscribed,
-                                     imgURL,
-                                     title,
-                                   }: CourseCardType) {
+  courseId,
+  progress,
+  isSubscribed,
+  imgURL,
+  title,
+  onAddCourse,
+  onRemoveCourse,
+}: CourseCardType) {
+
+  // Обработчик клика по иконке добавления/удаления курса
+  const handleSubscriptionClick = (e: React.MouseEvent) => {
+    e.preventDefault(); // Останавливаем переход по ссылке
+
+    if (isSubscribed) {
+      onRemoveCourse(courseId); // Если подписан, то удаляем курс
+    } else {
+      onAddCourse(courseId); // Если не подписан, то добавляем курс
+    }
+  };
 
   return (
     <Link to={`/course/${courseId}`}
-         className="relative w-[360px] h-[501px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
-         style={{
-           padding: '0px 0px 15px 0px',
-           gap: '40px',
-         }}
+      className="relative w-[360px] h-[501px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
+      style={{
+        padding: '0px 0px 15px 0px',
+        gap: '40px',
+      }}
     >
       <div title="">
         <img
@@ -37,25 +52,19 @@ export default function CourseCard({
           height={325}
         />
 
-        {isSubscribed ? (
+        {/* Проверка на null перед рендерингом блока с isSubscribed */}
+        {isSubscribed !== null && (
           <svg
             className="absolute w-8 h-8 right-[20px] top-[20px] z-10 cursor-custom"
+            onClick={handleSubscriptionClick} // Обработка клика по иконке
           >
             <g>
-              <title>Удалить курс</title>
-              <use xlinkHref={`/img/sprite.svg#icon-minus`}></use>
-            </g>
-          </svg>
-        ) : (
-          <svg
-            className="absolute w-8 h-8 right-[20px] top-[20px] z-10 cursor-custom"
-          >
-            <g>
-              <title>Добавить курс</title>
-              <use xlinkHref={`/img/sprite.svg#icon-plus`}></use>
+              <title>{isSubscribed ? "Удалить курс" : "Добавить курс"}</title>
+              <use xlinkHref={`/img/sprite.svg#icon-${isSubscribed ? "minus" : "plus"}`}></use>
             </g>
           </svg>
         )}
+
       </div>
       <div className="flex flex-col px-[30px] pt-6 pb-4 gap-y-[18px]">
         <h2 className="font-roboto-500 text-[24px] lg:text-[28px] leading-8">

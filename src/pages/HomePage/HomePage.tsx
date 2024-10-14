@@ -1,20 +1,82 @@
+import { useContext } from 'react';
 import CourseCard from '../../components/CourseCard/CourseCard';
 import { Button } from '../../components/Button/Button';
-import {CourseType} from '../../types/courses';
 import { Link } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Wrapper from '../../components/Wrapper/Wrapper';
 import noticeImg from '../../../public/img/notice.png';
+import { CoursesContext } from '../../context/CoursesContext'; // Контекст курсов
+import { UserContext } from '../../context/UserContext'; // Контекст пользователя
+import { WorkoutsContext } from '../../context/WorkoutsContext'; // Контекст тренировок
+import { addCourseWithWorkout, removeCourseWithWorkout } from '../../api/apiUser'; // Импортируем API для работы с курсами и тренировками
+import { CourseType } from '../../types/courses'; // Импортируем типы
+import { WorkoutType } from '../../types/workouts'; // Импортируем типы
 
-type Props = {
-  courses: CourseType[] | null;
-}
+export default function HomePage() {
+  const coursesContext = useContext(CoursesContext); // Получаем контекст курсов
+  const userContext = useContext(UserContext); // Получаем контекст пользователя
+  const workoutsContext = useContext(WorkoutsContext); // Получаем контекст тренировок
 
-export default function HomePage({courses}: Props) {
+  if (!coursesContext || !userContext || !workoutsContext) {
+    return <div>Loading...</div>;
+  }
+
+  const { courses } = coursesContext; // Достаем курсы из контекста
+  const { userData, setUser } = userContext; // Достаем пользователя и функцию для обновления данных
+  const { workouts } = workoutsContext; // Достаем тренировки из контекста
+
+  // Добавляем проверки на наличие данных для courses и workouts
+  if (!courses || !workouts) {
+    return <div>No data available.</div>; // Выводим сообщение, если данных нет
+  }
+
+  // Преобразуем массив курсов в объект, где ключом будет _id курса
+  const coursesObject = courses.reduce((acc, course) => {
+    acc[course._id] = course;
+    return acc;
+  }, {} as Record<string, CourseType>); // Явно указываем тип Record<string, CourseType>
+
+  // Функция для получения тренировок, связанных с курсом, и преобразования их в объект
+  const getWorkoutsForCourse = (courseId: string): Record<string, WorkoutType> => {
+    //console.log(courseId);
+    const course = courses.find(course => course._id === courseId); // Находим курс по ID
+    if (!course) return {}; // Если курс не найден, возвращаем пустой объект
+    //console.log(course);
+    //console.log(course.workouts);
+    //console.log("111" + workouts);
+    // Извлекаем тренировки, соответствующие ID из массива workouts курса, и преобразуем в объект
+    return course.workouts.reduce((acc, workoutId) => {
+      const workout = workouts.find(workout => workout._id === workoutId);
+      if (workout) {
+        acc[workout._id] = workout; // Сохраняем тренировку в объект с ключом-идентификатором
+      }
+      return acc;
+    }, {} as Record<string, WorkoutType>);
+  };
+
+  // Функция для добавления курса и тренировок
+  const handleAddCourse = async (courseId: string) => {
+    if (userData) {
+      const courseWorkouts = getWorkoutsForCourse(courseId); // Получаем тренировки для курса в виде объекта
+      //console.log(coursesObject);
+      //console.log(courseWorkouts);
+      const updatedUserData = await addCourseWithWorkout(userData.uid, courseId, coursesObject, courseWorkouts);
+      setUser(updatedUserData); // Обновляем данные пользователя в контексте
+    }
+  };
+
+  // Функция для удаления курса и тренировок
+  const handleRemoveCourse = async (courseId: string) => {
+    if (userData) {
+      const courseWorkouts = getWorkoutsForCourse(courseId); // Получаем тренировки для курса в виде объекта
+      const updatedUserData = await removeCourseWithWorkout(userData.uid, courseId, coursesObject, courseWorkouts);
+      setUser(updatedUserData); // Обновляем данные пользователя в контексте
+    }
+  };
 
   return (
     <Wrapper>
-      <Header/>
+      <Header />
       <div className="">
         <div id="notification-box" className="flex fixed flex-col items-center justify-center top-0 z-50 p-3"></div>
 
@@ -28,16 +90,28 @@ export default function HomePage({courses}: Props) {
         </div>
 
         <div className="flex md:justify-center lg:justify-start flex-wrap md:gap-y-10 gap-x-10">
-          {courses && courses.map((course) => (
-            <CourseCard
-              key={course._id}
-              courseId={course._id}
-              course={course}
-              isSubscribed={false}
-              imgURL={course.nameEN}
-              title={course.nameRU}
-            />
-          ))}
+          {courses.map((course) => {
+            let isSubscribed = null;
+
+            if (userData) {
+              // Проверяем, подписан ли пользователь на курс
+              const userCourseIds = userData.courses || [];
+              isSubscribed = userCourseIds.includes(course._id);
+            }
+
+            return (
+              <CourseCard
+                key={course._id}
+                courseId={course._id}
+                course={course}
+                isSubscribed={isSubscribed}
+                imgURL={course.nameEN}
+                title={course.nameRU}
+                onAddCourse={handleAddCourse}    // Передаем функцию добавления
+                onRemoveCourse={handleRemoveCourse} // Передаем функцию удаления
+              />
+            );
+          })}
         </div>
 
         <div className="flex justify-center mx-[auto] w-[140px] mt-[34px] bg-[#BCEC30] rounded-full">

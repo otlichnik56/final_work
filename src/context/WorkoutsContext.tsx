@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { WorkoutType } from "../types/workout.ts";
+import { WorkoutType } from "../types/workouts.ts";
 
 type ProviderProps = {
   children: React.ReactNode;

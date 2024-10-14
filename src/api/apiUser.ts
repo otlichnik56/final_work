@@ -6,7 +6,8 @@ import {
 } from "firebase/auth";
 import { ref, getDatabase, get, child, set, update } from "firebase/database";
 import { auth, app } from "../lib/firebaseConfig";
-import { WorkoutType } from "../types/workout"
+import { CourseType } from "../types/courses"
+import { WorkoutType } from "../types/workouts"
 
 const database = getDatabase(app);
 
@@ -33,6 +34,7 @@ export async function regUser({
     uid: uid,
     name: username,
     email: email,
+    password: password,
     courses: [],  // Пустой массив для курсов
     workouts: [], // Пустой массив для тренировок
   });
@@ -83,90 +85,117 @@ export async function changePassword(password: string) {
   }
 }
 
-// Добавление нового курса для пользователя
-export async function addCourse(uid: string, courseId: string) {
+// Добавление курса и связанных тренировок пользователю
+export async function addCourseWithWorkout(
+  uid: string, 
+  courseId: string, 
+  courses: Record<string, CourseType>, 
+  workouts: Record<string, WorkoutType>
+) {
   const userRef = ref(database, `users/${uid}`);
-  
+
+  // Получаем данные пользователя из базы данных
   const snapshot = await get(userRef);
   if (snapshot.exists()) {
     const userData = snapshot.val();
+
+    // Находим курс по его ID
+    const course = courses[courseId];
+    if (!course || !Array.isArray(course.workouts)) {
+      throw new Error("Курс не найден или не содержит тренировок");
+    }
+
+    // Получаем список ID тренировок из курса
+    const workoutIds = course.workouts || [];
+
+    // Находим тренировки по их ID из общего списка тренировок
+    const foundWorkouts = workoutIds
+      .map(workoutId => workouts[workoutId])
+      .filter(workout => workout !== undefined); // Убираем undefined, если какой-то workoutId не был найден
+
+    if (foundWorkouts.length === 0) {
+      throw new Error("Тренировки для курса не найдены");
+    }
+
+    // Подготовка тренировок с добавлением progressWorkout для каждого упражнения
+    const workoutsToAdd = foundWorkouts.reduce<Record<string, WorkoutType>>((acc, workout) => {
+      acc[workout._id] = {
+        ...workout,
+        exercises: workout.exercises.map(exercise => ({
+          ...exercise,
+          progressWorkout: 0, // Добавляем поле progressWorkout
+        })),
+      };
+      return acc;
+    }, {}); // Задаем начальное значение как пустой объект
+
+    // Добавляем курс в список курсов пользователя
     const updatedCourses = userData.courses ? [...userData.courses, courseId] : [courseId];
 
-    // Обновляем данные
+    // Обновляем объект тренировок пользователя
+    const updatedWorkouts = {
+      ...userData.workouts,
+      ...workoutsToAdd, // Добавляем новые тренировки
+    };
+
+    // Обновляем данные в базе данных
     await update(userRef, {
-      courses: updatedCourses
+      courses: updatedCourses,
+      workouts: updatedWorkouts,
     });
-    console.log("Курс добавлен:", updatedCourses);
+
+    console.log('Курс и тренировки добавлены:', updatedCourses, updatedWorkouts);
+
+    return { ...userData, courses: updatedCourses, workouts: updatedWorkouts };
   } else {
-    console.error("Пользователь не найден.");
+    throw new Error("Пользователь не найден");
   }
-  const response = await get(child(ref(database), `users/${uid}`));
-  return response.val();
 }
 
-// Добавление новой тренировки для пользователя
-export async function addWorkout(uid: string, workout: WorkoutType) {
+// Удаление курса и связанных тренировок пользователю
+export async function removeCourseWithWorkout(
+  uid: string, 
+  courseId: string, 
+  courses: Record<string, CourseType>, 
+  workouts: Record<string, WorkoutType>
+) {
   const userRef = ref(database, `users/${uid}`);
 
+  // Получаем данные пользователя из базы данных
   const snapshot = await get(userRef);
   if (snapshot.exists()) {
     const userData = snapshot.val();
-    const updatedWorkouts = userData.workouts ? [...userData.workouts, workout] : [workout];
 
-    // Обновляем данные
-    await update(userRef, {
-      workouts: updatedWorkouts
-    });
-    console.log("Тренировка добавлена:", updatedWorkouts);
-  } else {
-    console.error("Пользователь не найден.");
-  }
-  const response = await get(child(ref(database), `users/${uid}`));
-  return response.val();
-}
+    // Находим курс по его ID
+    const course = courses[courseId];
+    if (!course) {
+      throw new Error("Курс не найден");
+    }
 
-// Удаление курса для пользователя
-export async function removeCourse(uid: string, courseId: string) {
-  const userRef = ref(database, `users/${uid}`);
-  
-  const snapshot = await get(userRef);
-  if (snapshot.exists()) {
-    const userData = snapshot.val();
+    // Получаем список ID тренировок, которые нужно удалить
+    const workoutIdsToRemove = new Set(course.workouts || []);
+
+    // Удаляем курс из списка курсов пользователя
     const updatedCourses = userData.courses
-      ? userData.courses.filter((course: string) => course !== courseId)
+      ? userData.courses.filter((courseId: string) => courseId !== course._id)
       : [];
 
-    // Обновляем данные
-    await update(userRef, {
-      courses: updatedCourses
+    // Удаляем тренировки, связанные с этим курсом
+    const updatedWorkouts = { ...userData.workouts };
+    workoutIdsToRemove.forEach(workoutId => {
+      delete updatedWorkouts[workoutId];
     });
-    console.log("Курс удален:", updatedCourses);
-  } else {
-    console.error("Пользователь не найден.");
-  }
-  const response = await get(child(ref(database), `users/${uid}`));
-  return response.val();
-}
 
-// Удаление тренировки для пользователя
-export async function removeWorkout(uid: string, workoutId: string) {
-  const userRef = ref(database, `users/${uid}`);
-
-  const snapshot = await get(userRef);
-  if (snapshot.exists()) {
-    const userData = snapshot.val();
-    const updatedWorkouts = userData.workouts
-      ? userData.workouts.filter((workout: WorkoutType) => workout._id !== workoutId)
-      : [];
-
-    // Обновляем данные
+    // Обновляем данные в базе данных
     await update(userRef, {
-      workouts: updatedWorkouts
+      courses: updatedCourses,
+      workouts: updatedWorkouts,
     });
-    console.log("Тренировка удалена:", updatedWorkouts);
+
+    console.log('Курс и тренировки удалены:', updatedCourses, updatedWorkouts);
+
+    return { ...userData, courses: updatedCourses, workouts: updatedWorkouts };
   } else {
-    console.error("Пользователь не найден.");
+    throw new Error("Пользователь не найден");
   }
-  const response = await get(child(ref(database), `users/${uid}`));
-  return response.val();
 }

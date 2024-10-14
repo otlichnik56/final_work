@@ -1,23 +1,23 @@
-import { createContext, useState } from "react";
+import { createContext, useState, ReactNode } from "react";
 import { CourseType } from "../types/courses.ts";
 
 type ProviderProps = {
-  children: React.ReactNode;
+  children: ReactNode;
 };
 
 type ContextCoursesType = {
   courses: CourseType[] | null;
   loading: boolean;
   error: string | null;
-  setCourses: (prevState: CourseType[]) => void;
-  setLoading: (prevState: boolean) => void;
-  setError: (prevState: string | null) => void;
+  setCourses: (courses: CourseType[]) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string | null) => void;
 };
 
 export const CoursesContext = createContext<ContextCoursesType | null>(null);
 
 export default function CoursesProvider({ children }: ProviderProps) {
-  const [courses, setCourses] = useState<CourseType[]>([]);
+  const [courses, setCourses] = useState<CourseType[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 

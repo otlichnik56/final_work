@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Header from "../../components/Header/Header";
 import Wrapper from "../../components/Wrapper/Wrapper";
-import { CourseType } from "../../types/courses";
+import { CoursesContext } from "../../context/CoursesContext"; // Импорт контекста
 import { useParams } from "react-router-dom";
 
-type Props = {
-  courses: CourseType[] | null;
-}
-
-export default function CoursesPage({courses}: Props) {
-
+export default function CoursesPage() {
   const [color, setColor] = useState("bg-white");
-  const { id } = useParams();
+  const { id } = useParams(); // Получаем id курса из URL
+  const coursesContext = useContext(CoursesContext); // Достаем курсы из контекста
 
-  const course = courses?.find((el) => el._id === id);
+  if (!coursesContext) {
+    return <div>Загрузка курсов...</div>; // Можно добавить сообщение о загрузке
+  }
 
-  
+  const { courses } = coursesContext;
+
+  const course = courses?.find((el) => el._id === id); // Находим курс по id
+
   useEffect(() => {
     switch (course?.nameEN) {
       case "Yoga":
@@ -37,7 +38,6 @@ export default function CoursesPage({courses}: Props) {
         setColor("bg-white");
     }
   }, [course]);
-
 
   return (
     <>
