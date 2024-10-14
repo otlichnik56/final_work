@@ -2,12 +2,12 @@ import { LoginType, RegType } from "../types/user";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  updatePassword, updateProfile, sendPasswordResetEmail
+  updatePassword, updateProfile, sendPasswordResetEmail, EmailAuthProvider, reauthenticateWithCredential
 } from "firebase/auth";
 import { ref, getDatabase, get, child, set, update } from "firebase/database";
 import { auth, app } from "../lib/firebaseConfig";
 import { CourseType } from "../types/courses"
-import { WorkoutType } from "../types/workouts"
+import { WorkoutType, ExerciseType } from "../types/workouts"
 
 const database = getDatabase(app);
 
@@ -73,15 +73,42 @@ export async function handlePasswordReset(email: string) {
   }
 }
 
-// Сменить пароль
-export async function changePassword(password: string) {
+// Функция для повторной аутентификации
+async function reauthenticate(currentPassword: string) {
+  const user = auth.currentUser;
+
+  if (!user || !user.email) {
+    throw new Error("Пользователь не авторизован или отсутствует email.");
+  }
+
+  const credential = EmailAuthProvider.credential(user.email, currentPassword);
+
   try {
-    if (!auth.currentUser) {
-      throw new Error("Нет авторизации");
-    }
-    await updatePassword(auth.currentUser, password);
+    // Выполняем повторную аутентификацию
+    await reauthenticateWithCredential(user, credential);
+    console.log("Повторная аутентификация успешна.");
   } catch (error) {
-    if (error instanceof Error) throw new Error(error.message);
+    console.error("Ошибка повторной аутентификации:", error);
+    throw new Error("Не удалось повторно аутентифицировать пользователя.");
+  }
+}
+
+// Функция для смены пароля
+export async function changePassword(currentPassword: string, newPassword: string) {
+  try {
+    // Повторная аутентификация пользователя перед сменой пароля
+    await reauthenticate(currentPassword);
+
+    // После успешной повторной аутентификации, обновляем пароль
+    if (auth.currentUser) {
+      await updatePassword(auth.currentUser, newPassword);
+      console.log("Пароль успешно обновлен.");
+    } else {
+      throw new Error("Пользователь не найден.");
+    }
+  } catch (error) {
+    console.error("Ошибка смены пароля:", error);
+    throw new Error(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -198,4 +225,65 @@ export async function removeCourseWithWorkout(
   } else {
     throw new Error("Пользователь не найден");
   }
+}
+
+// Обновление прогресса тренировки и обновление данных контекста
+export async function updateWorkoutProgress(
+  uid: string, // ID пользователя
+  workoutId: string, // ID тренировки
+  progressData: Record<string, number>, // Объект с прогрессом упражнений
+  setUser: (userData: any) => void // Функция для обновления контекста
+) {
+  const userRef = ref(database, `users/${uid}`);
+
+  // Получаем данные пользователя из базы данных
+  const snapshot = await get(userRef);
+  if (!snapshot.exists()) {
+    throw new Error("Пользователь не найден");
+  }
+
+  const userData = snapshot.val();
+  const { workouts } = userData;
+
+  // Проверяем, существует ли тренировка с переданным workoutId
+  const userWorkout = workouts[workoutId];
+  if (!userWorkout) {
+    throw new Error("Тренировка не найдена");
+  }
+
+  // Обновляем прогресс упражнений
+  const updatedExercises = userWorkout.exercises.map((exercise: ExerciseType) => {
+    const newProgress = progressData[exercise.name];
+    return {
+      ...exercise,
+      progressWorkout: newProgress !== undefined ? newProgress : exercise.progressWorkout // Обновляем, если передан новый прогресс
+    };
+  });
+
+  // Создаем обновленную тренировку
+  const updatedWorkout: WorkoutType = {
+    ...userWorkout,
+    exercises: updatedExercises
+  };
+
+  // Обновляем только прогресс в базе данных
+  await update(userRef, {
+    [`workouts/${workoutId}`]: updatedWorkout // Только обновляем указанную тренировку
+  });
+
+  console.log("Прогресс обновлен для тренировки:", updatedWorkout);
+
+  // Обновляем контекст пользователя
+  const updatedUserData = {
+    ...userData,
+    workouts: {
+      ...workouts,
+      [workoutId]: updatedWorkout
+    }
+  };
+
+  // Обновляем данные в контексте пользователя
+  setUser(updatedUserData);
+
+  return updatedUserData;
 }

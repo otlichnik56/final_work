@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../lib/paths";
 import { UserContext } from "../../context/UserContext"; // Импорт контекста пользователя
@@ -9,12 +9,15 @@ import { addCourseWithWorkout, removeCourseWithWorkout } from '../../api/apiUser
 import { CourseType } from "../../types/courses"; // Импорт типов курсов
 import { WorkoutType } from "../../types/workouts"; // Импорт типов тренировок
 import { Button } from '../../components/Button/Button'; // Импорт кнопки
+import ChangePasswordModal from "../../pages/ProfilePage/ChangePasswordModal";
 
 export default function Profile() {
+  ChangePasswordModal
   const navigate = useNavigate();
   const userContext = useContext(UserContext); // Получаем контекст пользователя
   const coursesContext = useContext(CoursesContext); // Получаем контекст курсов
   const workoutsContext = useContext(WorkoutsContext); // Получаем контекст тренировок
+  const [isPasswordModalOpen, setPasswordModalOpen] = useState(false); // Состояние для модального окна
 
   // Проверка на наличие данных пользователя
   if (!userContext || !userContext.userData) {
@@ -91,6 +94,22 @@ export default function Profile() {
     navigate(`${paths.WORKOUT_SELECT}/${courseId}`); // Переход на страницу выбора тренировок с courseId
   };
 
+  // Обработка нажатия на кнопку "Изменить пароль"
+  const handleChangePassword = () => {
+    setPasswordModalOpen(true); // Открыть модальное окно для смены пароля
+  };
+
+  // Обработка сохранения нового пароля
+  const handleSavePassword = (newPassword: string, confirmPassword: string) => {
+    if (newPassword !== confirmPassword) {
+      alert("Пароли не совпадают");
+      return;
+    }
+    // Здесь можно вызвать API для смены пароля
+    console.log('Новый пароль:', newPassword);
+    setPasswordModalOpen(false); // Закрыть модальное окно
+  };
+
   return (
     <div className="">
       <h1 className="text-[40px] font-semibold leading-[44px] text-left text-[#000000]">
@@ -119,7 +138,8 @@ export default function Profile() {
                 className="w-[192px] h-[52px] bg-[#BCEC30] flex items-center justify-center text-sm leading-[19.8px] font-normal tracking-[-0.14px] text-black rounded-[46px] border-[none]
   outline: none hover:border-[none] hover:bg-[#C6FF00] active:bg-[#000000] active:text-white"
                 id="btnEnter"
-                type="submit"
+                type="button"
+                onClick={handleChangePassword} // Открытие модального окна для смены пароля
               >
                 Изменить пароль
               </button>
@@ -158,9 +178,15 @@ export default function Profile() {
             </div>
           ))}
         </div>
-
-
       </div>
+
+      {/* Модальное окно для смены пароля */}
+      {isPasswordModalOpen && (
+        <ChangePasswordModal
+          onClose={() => setPasswordModalOpen(false)}
+          onSubmit={handleSavePassword}
+        />
+      )}
     </div>
   );
 }

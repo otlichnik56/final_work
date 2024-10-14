@@ -1,27 +1,27 @@
 import { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button/Button';
 import { WorkoutSelectRow } from '../../components/WorkoutSelectRow/WorkoutSelectRow';
 import { CoursesContext } from '../../context/CoursesContext'; // Контекст курсов
 import { UserContext } from '../../context/UserContext'; // Контекст пользователя
 import { WorkoutType, ExerciseType } from '../../types/workouts'; // Импорт типов тренировок
-import { UserType } from '../../types/user'; // Импорт типа пользователя
 
 function WorkoutSelectPage() {
   const { courseId } = useParams<{ courseId: string }>(); // Получаем courseId из URL
   const coursesContext = useContext(CoursesContext); // Контекст курсов
   const userContext = useContext(UserContext); // Контекст пользователя
-
   const [workouts, setWorkouts] = useState<WorkoutType[]>([]); // Состояние для хранения тренировок
+  const [selectedWorkout, setSelectedWorkout] = useState<string | null>(null); // Состояние для выбранной тренировки
+  const navigate = useNavigate(); // Для навигации
 
   useEffect(() => {
-    if (coursesContext && userContext?.userData && courseId) {
+    if (coursesContext && coursesContext.courses && userContext?.userData && courseId) {
       // Находим курс по его ID
-      const course = coursesContext.courses?.find(course => course._id === courseId);
+      const course = coursesContext.courses.find(course => course._id === courseId);
       if (course && userContext.userData.workouts) {
         // Получаем все тренировки по их ID
         const foundWorkouts = course.workouts
-          .map(workoutId => userContext.userData!.workouts[workoutId as keyof typeof userContext.userData.workouts]) // Используем правильный тип для workoutId
+          .map(workoutId => userContext.userData!.workouts[workoutId as keyof typeof userContext.userData.workouts])
           .filter(Boolean) as WorkoutType[]; // Убираем undefined
 
         setWorkouts(foundWorkouts); // Устанавливаем тренировки в состояние
@@ -30,38 +30,36 @@ function WorkoutSelectPage() {
   }, [courseId, coursesContext, userContext]);
 
   function isWorkoutDone(workoutId: string): boolean {
-    // Проверка на наличие данных пользователя
-    if (!userContext?.userData) {
-      return false;
-    }
+    if (!userContext?.userData) return false;
 
-    // Находим тренировку пользователя по ее ID
     const userWorkout = userContext.userData.workouts[workoutId as keyof typeof userContext.userData.workouts] as WorkoutType;
 
-    // Если тренировка не найдена у пользователя, возвращаем false
-    if (!userWorkout) {
-      return false;
-    }
-    //console.log(userWorkout)
-    // Проверяем, завершены ли все упражнения в тренировке
+    if (!userWorkout) return false;
+
     return userWorkout.exercises.every((exercise: ExerciseType) => exercise.progressWorkout >= exercise.quantity);
   }
 
   function parseString(input: string): [string | null, string | null, string | null] {
-    // Разделяем строку по символу "/"
     const parts = input.split('/');
-  
-    // Возвращаем первые три элемента, заполняя недостающие null
     return [
-      parts[0] || null, // Если части нет, возвращаем null
+      parts[0] || null,
       parts[1] || null,
       parts[2] || null
     ];
   }
 
-  // Проверяем, что данные пользователя загружены
-  if (!userContext?.userData) {
-    return <div>Loading...</div>; // Отображение загрузки, если контекст не загружен
+  // Переход на страницу тренировки
+  const handleStartWorkout = () => {
+    if (selectedWorkout) {
+      const course = coursesContext?.courses?.find(course => course._id === courseId);
+      if (course) {
+        navigate(`/workout/${selectedWorkout}`, { state: { courseName: course.nameRU } });
+      }
+    }
+  };
+
+  if (!userContext?.userData || !coursesContext) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -72,16 +70,25 @@ function WorkoutSelectPage() {
             <header className="font-normal text-[32px] leading-[35.2px] mb-[14px]">Выберите тренировку</header>
             <div className="flex flex-col h-[360px] gap-[10px] items-start w-full overflow-y-auto custom-scrollbar">
               {workouts.map((workout) => (
-                <WorkoutSelectRow
+                <div
                   key={workout._id}
-                  day={parseString(workout.name)[2] || ''}
-                  name={parseString(workout.name)[1] || ''}
-                  theme={parseString(workout.name)[0] || ''} // Можно изменить это на другую информацию
-                  isDone={isWorkoutDone(workout._id)} // Определяем, завершена ли тренировка
-                />
+                  className={`w-full p-2 rounded-lg ${selectedWorkout === workout._id ? 'bg-blue-100' : 'bg-white'} hover:bg-blue-50 cursor-pointer`}
+                  onClick={() => setSelectedWorkout(workout._id)}
+                >
+                  <WorkoutSelectRow
+                    day={parseString(workout.name)[2] || ''}
+                    name={parseString(workout.name)[1] || ''}
+                    theme={parseString(workout.name)[0] || ''} // Можно изменить это на другую информацию
+                    isDone={isWorkoutDone(workout._id)} // Определяем, завершена ли тренировка
+                  />
+                </div>
               ))}
             </div>
-            <Button title={"Начать"} />
+            {/* Одна кнопка для старта выбранной тренировки */}
+            <Button
+              title={"Начать"}
+              onClick={handleStartWorkout}
+            />
           </div>
         </div>
       </div>

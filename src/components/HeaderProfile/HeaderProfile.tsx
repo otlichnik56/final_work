@@ -1,12 +1,14 @@
 import { useState, useContext } from "react";
 import logoImg from "/public/img/logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext"; // Импорт контекста
+import ButtonHeader from "../ButtonHeader/ButtonHeader";
+import { paths } from "../../lib/paths";
 
 export default function HeaderProfile() {
   
   const [isOpen, setIsOpen] = useState(false); // Состояние для открытия/закрытия блока
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
   const userContext = useContext(UserContext); // Получаем контекст пользователя
 
   if (!userContext || !userContext.userData) {
@@ -16,12 +18,27 @@ export default function HeaderProfile() {
           <Link to="/">
             <img src={logoImg} className="w-[220px] h-[35px]" alt="logo" />
           </Link>
+          <p className="font-roboto-400 text-[18px] leading-[20px] hidden md:block pt-3.5 text-[#585959]">
+            Онлайн-тренировки для занятий дома
+          </p>
+        </div>
+  
+        <div className="w-[83px] md:w-[103px]">
+          <Link to={paths.LOGIN}>
+            <ButtonHeader title="Войти" />
+          </Link>
         </div>
       </div>
     );
   }
 
-  const { userData } = userContext;
+  const { userData, logout } = userContext;
+
+  // Функция для обработки выхода пользователя
+  const handleLogout = () => {
+    logout();
+    navigate(paths.HOME);
+  };
 
   return (
     <div className="relative flex justify-between mx-auto py-10 md:pt-[50px] md:pb-14 lg:max-w-[1440px] w-full main:px-[140px]">
@@ -38,48 +55,47 @@ export default function HeaderProfile() {
       {/* Отображаем имя пользователя */}
       <div className="relative flex gap-2.5">
         <img
-          src="/img/Profile.svg"
-          className="w-[50px] h-[50px]"
-          alt="Profile"
-        />
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center space-x-2"
-        >
-          <span className="text-lg font-semibold">
-            {userData.name || "Пользователь"}
-          </span>
-        </button>
-        <img
-          src="/img/Rectangle.svg"
-          className="cursor-pointer w-[12px] opacity-[0px] left-[1294.68px] top-[64.36px] flex items-center hover:cursor-[pioner]"
-          alt="Rectangle"
-        />
+            src="/img/Profile.svg"
+            className="w-[50px] h-[50px]"
+            alt="Profile"
+          />
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="flex items-center space-x-2"
+          >
+            <span className="text-lg font-semibold">
+              {userData.name || "Пользователь"}
+            </span>
+          </button>
+          <img
+            onClick={() => setIsOpen(!isOpen)}
+            src="/img/Rectangle.svg"
+            className="cursor-pointer w-[12px] opacity-[0px] left-[1294.68px] top-[64.36px] flex items-center hover:cursor-[pioner]"
+            alt="Rectangle"
+          />
 
         {/* Выпадающий блок */}
-        {/* {isOpen && (
-          <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg p-4 z-10">
+        {isOpen && (
+          <div className="absolute top-10 right-10 mt-2 bg-white rounded-lg shadow-lg p-4 z-10" style={{ height: "258px", width: "266px" }}>
             <div className="text-center">
               <p className="font-semibold text-lg">{userData.name}</p>
               <p className="text-gray-500 text-sm">{userData.email}</p>
             </div>
             <div className="mt-4 space-y-2">
-              <Link to={paths.NEWPASSWORD}>
-                <button className="w-full border border-black bg-lime text-black py-2 px-4 rounded-lg z-20">
-                  Сменить пароль
+              <Link to={paths.PROFILE}>
+                <button className="justify-self-center font-roboto-400  rounded-full w-full h-[52px] px-5 bg-lime text-lg text-black hover:bg-limeHover active:bg-black active:text-white cursor-custom">
+                  Мой профиль
                 </button>
               </Link>
-              <Link to={paths.PROFILE}>
               <button
-                onClick={paths.PROFILE}
-                className="w-full border border-black text-black py-2 px-4 rounded-lg z-20"
+                onClick={handleLogout}
+                className="justify-self-center font-roboto-400 rounded-full w-full h-[52px] px-5 bg-transparent border border-black text-lg text-black active:bg-black active:text-white cursor-custom"
               >
-                Отмена
+                Выйти
               </button>
-              </Link>
             </div>
           </div>
-        )} */}
+        )}
       </div>
     </div>
   );

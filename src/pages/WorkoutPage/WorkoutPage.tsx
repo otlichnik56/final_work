@@ -1,105 +1,115 @@
-import { Button } from "../../components/Button/Button";
-import WorkoutProgress from "../../components/WorkoutProgress/WorkoutProgress.tsx";
-import Wrapper from "../../components/Wrapper/Wrapper";
+import { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import Wrapper from '../../components/Wrapper/Wrapper';
+import HeaderProfile from '../../components/HeaderProfile/HeaderProfile';
+import { UserContext } from '../../context/UserContext'; // Контекст пользователя
+import { WorkoutType, ExerciseType } from '../../types/workouts'; // Импорт типов
+import ProgressModal from './ProgressModal'; // Импорт модального окна
+import { Button } from '../../components/Button/Button';
+import { updateWorkoutProgress } from '../../api/apiUser'; // Импорт API
+import WorkoutProgress from '../../components/WorkoutProgress/WorkoutProgress';
 
-export default function WorkoutPage() {
+const WorkoutPage = () => {
+  const { workoutId } = useParams<{ workoutId: string }>(); // Получаем workoutId из URL
+  const userContext = useContext(UserContext); // Контекст пользователя
+  const [workout, setWorkout] = useState<WorkoutType | null>(null); // Состояние для хранения тренировки
+  const [isModalOpen, setModalOpen] = useState(false); // Состояние для управления модалкой
+
+  useEffect(() => {
+    if (userContext?.userData?.workouts && workoutId) {
+      const userWorkout = userContext.userData.workouts[workoutId as keyof typeof userContext.userData.workouts] as WorkoutType;
+      if (userWorkout) {
+        setWorkout(userWorkout);
+      }
+    }
+  }, [workoutId, userContext]);
+
+  // Функция для сохранения прогресса
+  const handleSaveProgress = async (updatedProgress: { [key: string]: number }) => {
+    if (workout) {
+      // Обновляем прогресс тренировок в локальном состоянии
+      const updatedWorkout = {
+        ...workout,
+        exercises: workout.exercises.map(exercise => ({
+          ...exercise,
+          progressWorkout: updatedProgress[exercise.name] || exercise.progressWorkout
+        }))
+      };
+      setWorkout(updatedWorkout);
+
+      try {
+        // Обновляем прогресс в базе данных
+        if (userContext?.userData) {
+          await updateWorkoutProgress(userContext.userData.uid, workout._id, updatedProgress, userContext.setUser);
+          console.log("Прогресс успешно обновлен");
+        }
+      } catch (error) {
+        console.error("Ошибка при обновлении прогресса:", error);
+      }
+    }
+  };
+
+  if (!workout) {
+    return <div>Loading...</div>;
+  }
+
+  function calculatePercentage(part: number, total: number): string {
+    if (total === 0) {
+      throw new Error("Total cannot be zero");
+    }
+    const percentage = (part / total) * 100;
+    return Math.round(percentage) + "%";
+  }
+
   return (
     <Wrapper>
+      <HeaderProfile />
       <section>
-        <h1 className="font-roboto-500 text-2xl lg:text-6xl font-medium text-black mb-[10px] lg:mb-6">
-          Йога
+        <h1 className="font-roboto-500 text-2xl lg:text-6xl font-medium text-black mb-4 lg:mb-6">
+          Тренировка
         </h1>
-        <p className="text-black text-[32px] font-roboto-400 font-normal mb-6 lg:mb-10">
-          Красота и здоровье / Йога на каждый день / 2 день
+        <p className="text-black text-[32px] font-roboto-400 font-normal mb-4 lg:mb-10">
+          {workout.name}
         </p>
         <div className="h-[189px] md:h-[639px] rounded-[30px] mb-6 lg:mb-10">
-          <h3>
-            <img src="../img/video.jpg" />
-          </h3>
+          <iframe
+            width="100%"
+            height="100%"
+            src={workout.video}
+            title={workout.name}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
         </div>
       </section>
-      <section className="rounded-[30px] p-[30px] lg:p-10 bg-white shadow-def ">
-        <h2 className="text-[32px] text-black font-skyeng font-normal mb-[20px]">
+
+      <section className="rounded-[30px] p-6 lg:p-10 bg-white shadow-md">
+        <h2 className="text-[32px] text-black font-skyeng font-normal mb-4">
           Упражнения тренировки
         </h2>
         <div className="grid grid-flow-row gap-6 items-end md:grid-cols-2 md:gap-5 xl:grid-cols-3">
-          <div className="lg:w-[320px] w-[283px]">
-            <div>
-              <p className="text-black text-[18px] font-roboto-400 font-normal mb-[10px]">
-                Наклоны вперед 0%
-              </p>
+          {workout.exercises.map((exercise: ExerciseType) => (
+            <div key={exercise.name} className="mb-4">
+              <WorkoutProgress title={exercise.name} progress={calculatePercentage(exercise.progressWorkout, exercise.quantity)} />
             </div>
-            <WorkoutProgress title="Присяд за обеденный стол" progress="100%" />
-          </div>
-          <div className="lg:w-[320px] w-[283px]">
-            <div>
-              <p className="text-black text-[18px] font-roboto-400 font-normal mb-[10px]">
-                Наклоны вперед 0%
-              </p>
-            </div>
-            <WorkoutProgress title="Присяд за обеденный стол" progress="100%" />
-          </div>
-          <div className="lg:w-[320px] w-[283px]">
-            <div>
-              <p className="text-black text-[18px] font-roboto-400 font-normal mb-[10px]">
-                Наклоны вперед 0%
-              </p>
-            </div>
-            <WorkoutProgress title="Присяд за обеденный стол" progress="100%" />
-          </div>
-          <div className="lg:w-[320px] w-[283px]">
-            <div>
-              <p className="text-black text-[18px] font-roboto-400 font-normal mb-[10px]">
-                Наклоны назад 0%
-              </p>
-            </div>
-            <WorkoutProgress title="Присяд за обеденный стол" progress="100%" />
-          </div>
-          <div className="lg:w-[320px] w-[283px]">
-            <div>
-              <p className="text-black text-[18px] font-roboto-400 font-normal mb-[10px]">
-                Наклоны назад 0%
-              </p>
-            </div>
-            <WorkoutProgress title="Присяд за обеденный стол" progress="100%" />
-          </div>
-          <div className="lg:w-[320px] w-[283px]">
-            <div>
-              <p className="text-black text-[18px] font-roboto-400 font-normal mb-[10px]">
-                Наклоны назад 0%
-              </p>
-            </div>
-            <WorkoutProgress title="Присяд за обеденный стол" progress="100%" />
-          </div>
-          <div className="lg:w-[320px] w-[283px]">
-            <div>
-              <p className="text-black text-[18px] font-roboto-400 font-normal mb-[10px]">
-                Поднятие ног, согнутых в коленях 0%
-              </p>
-            </div>
-            <WorkoutProgress title="Присяд за обеденный стол" progress="100%" />
-          </div>
-          <div className="lg:w-[320px] w-[283px]">
-            <div>
-              <p className="text-black text-[18px] font-roboto-400 font-normal mb-[10px]">
-                Поднятие ног, согнутых в коленях 0%
-              </p>
-            </div>
-            <WorkoutProgress title="Присяд за обеденный стол" progress="100%" />
-          </div>
-          <div className="lg:w-[320px] w-[283px]">
-            <div>
-              <p className="text-black text-[18px] font-roboto-400 font-normal mb-[10px]">
-                Поднятие ног, согнутых в коленях 0%
-              </p>
-            </div>
-            <WorkoutProgress title="Присяд за обеденный стол" progress="100%" />
-          </div>
+          ))}
         </div>
         <div className="lg:w-[320px] max-w-[283px] w-auto mt-10">
-          <Button title="Заполнить свой прогресс" />
+          <Button title="Заполнить свой прогресс" onClick={() => setModalOpen(true)} />
         </div>
       </section>
+
+      {/* Модальное окно для ввода прогресса */}
+      {isModalOpen && (
+        <ProgressModal
+          workout={workout} // Передаем всю тренировку
+          onClose={() => setModalOpen(false)}
+          onSave={handleSaveProgress}
+        />
+      )}
     </Wrapper>
   );
-}
+};
+
+export default WorkoutPage;
