@@ -9,5 +9,7 @@ export const paths = {
   NEWPASSWORD:"/newpassword",
   COURSE:"/course/:id",
   WORKOUT: "/workout",
+  PROGRESS:"/progress",
+  PROGRESSDONE:"/progressdone",
   SELECTION: "/selection/:id",
 }

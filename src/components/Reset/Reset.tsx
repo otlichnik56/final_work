@@ -33,7 +33,7 @@ const Reset = ({ email }: ResetProps) => {
             <div className="pb-[50px]">
               <img src="../../../public/img/logo_modal.png" alt="logo_modal" />
             </div>
-            <div className="w-[280px] h-[60px] px-[18px] text-center">
+            <div className="h-[60px] text-center">
               {message && (
                 <span className="text-lg font-normal leading-[19.8px] font-roboto block">
                   {message}
