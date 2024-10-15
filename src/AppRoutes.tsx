@@ -10,7 +10,7 @@ import WorkoutSelectPage from "./pages/WorkoutSelectPage/WorkoutSelectPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ProgressPage from "./pages/ProgressPage";
 import ProgressDonePage from "./pages/ProgressDonePage";
-import { PrivateRoute } from "./components/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import HomePage from "./pages/HomePage/HomePage";
 import { CoursesContext } from "./context/CoursesContext"; // Импорт контекста курсов
 import { WorkoutsContext } from "./context/WorkoutsContext"; // Импорт контекста тренировок

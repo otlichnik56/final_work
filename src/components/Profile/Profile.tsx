@@ -12,7 +12,6 @@ import { Button } from '../../components/Button/Button'; // Импорт кно�
 import ChangePasswordModal from "../../pages/ProfilePage/ChangePasswordModal";
 
 export default function Profile() {
-  ChangePasswordModal
   const navigate = useNavigate();
   const userContext = useContext(UserContext); // Получаем контекст пользователя
   const coursesContext = useContext(CoursesContext); // Получаем контекст курсов
@@ -63,6 +62,38 @@ export default function Profile() {
     }, {} as Record<string, WorkoutType>);
   };
 
+  // Функция для расчета прогресса по курсу
+  const calculateCourseProgress = (course: CourseType) => {
+    const courseWorkouts = getWorkoutsForCourse(course); // Получаем тренировки курса
+    const totalWorkouts = Object.keys(courseWorkouts).length; // Общее количество тренировок
+    //console.log(courseWorkouts);
+    //console.log(totalWorkouts);
+
+    // Проверяем, что userData.workouts — это массив
+    const userWorkouts = Array.isArray(userData.workouts) ? userData.workouts : [];
+    //console.log(userWorkouts);
+    // Найти все тренировки из контекста пользователя
+    const completedWorkouts = Object.values(courseWorkouts).filter((workout) => {
+      //console.log(completedWorkouts);
+      const userWorkout = userWorkouts.find((userW) => userW._id === workout._id);
+
+      if (userWorkout) {
+        // Проверяем, завершена ли каждая тренировка (если все упражнения завершены)
+        const isWorkoutComplete = userWorkout.exercises.every(
+          (exercise) => exercise.progressWorkout >= exercise.quantity
+        );
+        return isWorkoutComplete; // Если все упражнения завершены, тренировка завершена
+      }
+
+      return false;
+    });
+
+    const completedWorkoutsCount = completedWorkouts.length;
+    const progressPercentage = (completedWorkoutsCount / totalWorkouts) * 100;
+
+    return progressPercentage.toFixed(0); // Возвращаем прогресс с двумя знаками после запятой
+  };
+
   // Функция для обработки выхода пользователя
   const handleLogout = () => {
     logout(); // Очистка данных пользователя в контексте
@@ -108,6 +139,18 @@ export default function Profile() {
     // Здесь можно вызвать API для смены пароля
     console.log('Новый пароль:', newPassword);
     setPasswordModalOpen(false); // Закрыть модальное окно
+  };
+
+  // Определяем текст кнопки в зависимости от прогресса
+  const getButtonLabel = (progress: number) => {
+    if (progress === 0) {
+      return "Начать тренировки";
+    } else if (progress > 0 && progress < 100) {
+      return "Продолжить";
+    } else if (progress === 100) {
+      return "Начать заново";
+    }
+    return "Продолжить тренировки"; // По умолчанию
   };
 
   return (
@@ -160,23 +203,30 @@ export default function Profile() {
         </h2>
 
         <div className="flex md:justify-center lg:justify-start flex-wrap md:gap-y-10 gap-x-10">
-          {userCourses && userCourses.map((course) => (
-            <div key={course._id} className="course-item w-[360px] flex flex-col items-center">
-              <CourseCard
-                courseId={course._id}
-                course={course}
-                isSubscribed={true} // Пользователь уже подписан
-                imgURL={course.nameEN}
-                title={course.nameRU}
-                onAddCourse={handleAddCourse}    // Передаем функцию добавления
-                onRemoveCourse={handleRemoveCourse} // Передаем функцию удаления
-              />
-              {/* Кнопка "Перейти к курсу" */}
-              <div className="w-full mt-4">
-                <Button title="Перейти к курсу" onClick={() => handleGoToCourse(course._id)} />
+          {userCourses && userCourses.map((course) => {
+            const progress = parseFloat(calculateCourseProgress(course));
+            return (
+              <div key={course._id} className="course-item w-[360px] flex flex-col items-center">
+                <CourseCard
+                  courseId={course._id}
+                  course={course}
+                  isSubscribed={true} // Пользователь уже подписан
+                  imgURL={course.nameEN}
+                  title={course.nameRU}
+                  onAddCourse={handleAddCourse}    // Передаем функцию добавления
+                  onRemoveCourse={handleRemoveCourse} // Передаем функцию удаления
+                />
+                {/* Блок прогресса курса */}
+                <div className="text-center text-lg text-black mt-4">
+                  Прогресс: {progress}%
+                </div>
+                {/* Кнопка "Перейти к курсу" с разными названиями */}
+                <div className="w-full mt-4">
+                  <Button title={getButtonLabel(progress)} onClick={() => handleGoToCourse(course._id)} />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

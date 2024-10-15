@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import { WorkoutType, ExerciseType } from "../../types/workouts";
+import { UserContext } from "../../context/UserContext"; // Импорт контекста пользователя
 
 interface ProgressModalProps {
   workout: WorkoutType; // Текущая тренировка
@@ -9,6 +10,24 @@ interface ProgressModalProps {
 
 const ProgressModal: React.FC<ProgressModalProps> = ({ workout, onClose, onSave }) => {
   const [progress, setProgress] = useState<Record<string, number>>({}); // Локальное состояние для хранения введенного прогресса
+
+  // Получаем контекст пользователя
+  const userContext = useContext(UserContext);
+
+  // Если контекст не загружен или нет данных о тренировках, выводим ошибку
+  if (!userContext || !userContext.userData?.workouts) {
+    console.error("Данные о тренировках не найдены.");
+    return null;
+  }
+
+  // Инициализируем прогресс упражнения с текущими значениями progressWorkout
+  useEffect(() => {
+    const initialProgress = workout.exercises.reduce((acc: Record<string, number>, exercise: ExerciseType) => {
+      acc[exercise.name] = exercise.progressWorkout || 0; // Присваиваем текущее значение progressWorkout или 0
+      return acc;
+    }, {});
+    setProgress(initialProgress);
+  }, [workout]);
 
   // Обработка изменения ввода для каждого упражнения
   const handleInputChange = (exerciseName: string, value: number) => {
@@ -20,35 +39,49 @@ const ProgressModal: React.FC<ProgressModalProps> = ({ workout, onClose, onSave 
 
   // Обработка нажатия на кнопку "Сохранить"
   const handleSave = () => {
-    onSave(progress); // Передаем прогресс в компонент WorkoutPage
-    onClose(); // Закрываем модальное окно
+    onSave(progress); // Передаем прогресс в родительский компонент
+    onClose(); // Закрываем первое модальное окно
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4">Мой прогресс</h2>
-        <div className="overflow-y-auto max-h-96">
-          {workout.exercises.map((exercise: ExerciseType) => (
-            <div key={exercise.name} className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">
-                Сколько раз вы сделали {exercise.name}?
-              </label>
-              <input
-                type="number"
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:border-blue-300"
-                value={progress[exercise.name] || 0}
-                onChange={(e) => handleInputChange(exercise.name, Number(e.target.value))}
-              />
+      <div className="block w-screen min-h-screen mx-auto my-0">
+        <div className="h-screen flex items-center">
+          <div className="block bg-white w-[426px] h-[595.5px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 pr-[30px] pl-[50px] py-[40px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
+            <div className="text-[32px] font-semibold leading-[35.2px] text-left font-family: StratosSkyeng text-black">
+              <h2 className="pb-12">Мой прогресс</h2>
             </div>
-          ))}
+            <div className=" w-[346px] h-[347px] overflow-y-scroll overflow-x-hidden">
+              <div className="text-lg font-normal text-[black] leading-[19.8px] text-left font-family: Roboto">
+                <div className="max-h-96">
+                  {workout.exercises.map((exercise: ExerciseType) => (
+                    <div key={exercise.name} className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700">
+                        Сколько раз вы сделали {exercise.name}?
+                      </label>
+                      <input
+                        type="number"
+                        className="h-[52px] w-[320px] mt-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid border-[rgba(148,166,190,0.4)] placeholder:font-normal placeholder:text-lg 
+                       placeholder:text-[#94a6be] focus:outline-none"
+                        value={progress[exercise.name] ?? 0} // Убедитесь, что значение всегда определено, используем 0 по умолчанию
+                        onChange={(e) => handleInputChange(exercise.name, Number(e.target.value))}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <button
+              className="w-[346px] h-[52px] bg-[#BCEC30] flex items-center justify-center text-sm leading-[19.8px] font-normal tracking-[-0.14px] text-black mt-8 mb-2.5 rounded-[46px] border-[none]
+              outline: none hover:border-[none] hover:bg-[#C6FF00] active:bg-[#000000] active:text-white"
+              id="btnEnter"
+              type="submit"
+              onClick={handleSave}
+            >
+              Сохранить
+            </button>
+          </div>
         </div>
-        <button
-          onClick={handleSave}
-          className="justify-self-center font-roboto-400  rounded-full w-full h-[52px] px-5 bg-lime text-lg text-black hover:bg-limeHover active:bg-black active:text-white cursor-custom"
-        >
-          Сохранить
-        </button>
       </div>
     </div>
   );

@@ -13,7 +13,8 @@ const WorkoutPage = () => {
   const { workoutId } = useParams<{ workoutId: string }>(); // Получаем workoutId из URL
   const userContext = useContext(UserContext); // Контекст пользователя
   const [workout, setWorkout] = useState<WorkoutType | null>(null); // Состояние для хранения тренировки
-  const [isModalOpen, setModalOpen] = useState(false); // Состояние для управления модалкой
+  const [isModalOpen, setModalOpen] = useState(false); // Состояние для управления модалкой прогресса
+  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false); // Состояние для управления подтверждающим модальным окном
 
   useEffect(() => {
     if (userContext?.userData?.workouts && workoutId) {
@@ -42,6 +43,8 @@ const WorkoutPage = () => {
         if (userContext?.userData) {
           await updateWorkoutProgress(userContext.userData.uid, workout._id, updatedProgress, userContext.setUser);
           console.log("Прогресс успешно обновлен");
+          setModalOpen(false); // Закрываем основное окно прогресса
+          setConfirmModalOpen(true); // Открываем окно подтверждения
         }
       } catch (error) {
         console.error("Ошибка при обновлении прогресса:", error);
@@ -111,8 +114,30 @@ const WorkoutPage = () => {
           onSave={handleSaveProgress}
         />
       )}
+
+      {/* Модальное окно для подтверждения прогресса */}
+      {isConfirmModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="block bg-white w-[426px] h-[278px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 pr-[30px] pl-[50px] py-[40px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
+            <div>
+              <h1 className="text-[40px] pb-[34px] text-[black] font-semibold leading-[48px] text-center font-family: StratosSkyeng">
+                Ваш прогресс засчитан!
+              </h1>
+            </div>
+            <div className="w-[346px] h-[96px] ">
+              <img
+                onClick={() => setConfirmModalOpen(false)}
+                className="mx-auto"
+                src="/img/Check-in-Circle.png"
+                alt="logo_modal"
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </Wrapper>
   );
 };
 
 export default WorkoutPage;
+
