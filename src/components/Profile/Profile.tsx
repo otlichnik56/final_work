@@ -66,15 +66,12 @@ export default function Profile() {
   const calculateCourseProgress = (course: CourseType) => {
     const courseWorkouts = getWorkoutsForCourse(course); // Получаем тренировки курса
     const totalWorkouts = Object.keys(courseWorkouts).length; // Общее количество тренировок
-    //console.log(courseWorkouts);
-    //console.log(totalWorkouts);
 
-    // Проверяем, что userData.workouts — это массив
-    const userWorkouts = Array.isArray(userData.workouts) ? userData.workouts : [];
-    //console.log(userWorkouts);
+    // Преобразуем объект userData.workouts в массив
+    const userWorkouts = userData.workouts ? Object.values(userData.workouts) : [];
+
     // Найти все тренировки из контекста пользователя
     const completedWorkouts = Object.values(courseWorkouts).filter((workout) => {
-      //console.log(completedWorkouts);
       const userWorkout = userWorkouts.find((userW) => userW._id === workout._id);
 
       if (userWorkout) {

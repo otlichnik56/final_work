@@ -42,7 +42,7 @@ const WorkoutPage = () => {
         // Обновляем прогресс в базе данных
         if (userContext?.userData) {
           await updateWorkoutProgress(userContext.userData.uid, workout._id, updatedProgress, userContext.setUser);
-          console.log("Прогресс успешно обновлен");
+          //console.log("Прогресс успешно обновлен");
           setModalOpen(false); // Закрываем основное окно прогресса
           setConfirmModalOpen(true); // Открываем окно подтверждения
         }

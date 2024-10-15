@@ -67,7 +67,7 @@ export async function loginUser({ email, password }: LoginType) {
 export async function handlePasswordReset(email: string) {
   try {
     await sendPasswordResetEmail(auth, email);
-    console.log(`Ссылка для восстановления пароля отправлена на ${email}`);
+    //console.log(`Ссылка для восстановления пароля отправлена на ${email}`);
   } catch (error) {
     console.error("Ошибка при отправке письма для сброса пароля:", error);
   }
@@ -86,7 +86,7 @@ async function reauthenticate(currentPassword: string) {
   try {
     // Выполняем повторную аутентификацию
     await reauthenticateWithCredential(user, credential);
-    console.log("Повторная аутентификация успешна.");
+    //console.log("Повторная аутентификация успешна.");
   } catch (error) {
     console.error("Ошибка повторной аутентификации:", error);
     throw new Error("Не удалось повторно аутентифицировать пользователя.");
@@ -99,10 +99,18 @@ export async function changePassword(currentPassword: string, newPassword: strin
     // Повторная аутентификация пользователя перед сменой пароля
     await reauthenticate(currentPassword);
 
-    // После успешной повторной аутентификации, обновляем пароль
+    // Проверяем, авторизован ли пользователь
     if (auth.currentUser) {
+      // Обновляем пароль в Firebase Authentication
       await updatePassword(auth.currentUser, newPassword);
-      console.log("Пароль успешно обновлен.");
+
+      // Получаем ссылку на документ пользователя в Realtime Database
+      const userRef = ref(database, `users/${auth.currentUser.uid}`);
+
+      // Обновляем пароль в базе данных
+      await update(userRef, { password: newPassword });
+
+      //console.log("Пароль успешно обновлен в Firebase и базе данных.");
     } else {
       throw new Error("Пользователь не найден.");
     }
@@ -171,7 +179,7 @@ export async function addCourseWithWorkout(
       workouts: updatedWorkouts,
     });
 
-    console.log('Курс и тренировки добавлены:', updatedCourses, updatedWorkouts);
+    //console.log('Курс и тренировки добавлены:', updatedCourses, updatedWorkouts);
 
     return { ...userData, courses: updatedCourses, workouts: updatedWorkouts };
   } else {
@@ -219,7 +227,7 @@ export async function removeCourseWithWorkout(
       workouts: updatedWorkouts,
     });
 
-    console.log('Курс и тренировки удалены:', updatedCourses, updatedWorkouts);
+    //console.log('Курс и тренировки удалены:', updatedCourses, updatedWorkouts);
 
     return { ...userData, courses: updatedCourses, workouts: updatedWorkouts };
   } else {
@@ -271,7 +279,7 @@ export async function updateWorkoutProgress(
     [`workouts/${workoutId}`]: updatedWorkout // Только обновляем указанную тренировку
   });
 
-  console.log("Прогресс обновлен для тренировки:", updatedWorkout);
+  //console.log("Прогресс обновлен для тренировки:", updatedWorkout);
 
   // Обновляем контекст пользователя
   const updatedUserData = {

@@ -12,7 +12,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({ onClose }) =>
   
     // Если контекст отсутствует, прекращаем выполнение функции
     if (!userContext || !userContext.userData) {
-      console.error("Контекст пользователя не загружен или данные пользователя отсутствуют.");
+      //console.error("Контекст пользователя не загружен или данные пользователя отсутствуют.");
       return null;
     }
   

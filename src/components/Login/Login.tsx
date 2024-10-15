@@ -43,7 +43,7 @@ const Login = () => {
 
       setError(null);
       setUser(response);
-      console.log(response);
+      //console.log(response);
       navigate(paths.HOME); 
     } catch (error: any) {
       setError("Пароль введён не верно, попробуйте ещё раз. ");
