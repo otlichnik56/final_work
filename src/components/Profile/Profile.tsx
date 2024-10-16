@@ -167,7 +167,7 @@ export default function Profile() {
               {userData.name || "Пользователь"}
             </p>
 
-            <p className="text-lg font-normal leading-[19.8px] text-left text-[black]">
+            <p className="text-lg font-normal leading-[19.8px] text-left text-[black] pb-2.5">
               Логин: {userData.email || "Логин"}
             </p>
             <p className="text-lg font-normal leading-[19.8px] text-left text-[black]">
@@ -195,7 +195,7 @@ export default function Profile() {
         </div>
       </div>
       <div>
-        <h2 className="text-[40px] pt-[72px] font-semibold leading-[44px] text-left text-[#000000]">
+        <h2 className="text-[40px] pt-[60px] pb-10 font-semibold leading-[44px] text-left text-[#000000]">
           Мои курсы
         </h2>
 
