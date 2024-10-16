@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Wrapper from '../../components/Wrapper/Wrapper';
-import HeaderProfile from '../../components/HeaderProfile/HeaderProfile';
+import HeaderProfile from '../../components/Header/Header';
 import { UserContext } from '../../context/UserContext'; // Контекст пользователя
 import { WorkoutType, ExerciseType } from '../../types/workouts'; // Импорт типов
 import ProgressModal from './ProgressModal'; // Импорт модального окна

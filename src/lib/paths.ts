@@ -3,14 +3,9 @@ export const paths = {
   PROFILE: "/profile",
   LOGIN: "/login",
   REGISTER: "/register",
-  EXIT: "/exit",
   NOT_FOUND: "*",
   RESET: "/reset",
-  NEWPASSWORD:"/newpassword",
   COURSE:"/course/:id",
   WORKOUT: "/workout",
-  WORKOUT_SELECT: "/workout_select",
-  PROGRESS:"/progress",
-  PROGRESSDONE:"/progressdone",
-  SELECTION: "/selection/:id",
+  WORKOUT_SELECT: "/workout_select"
 }
