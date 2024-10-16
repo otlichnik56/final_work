@@ -59,11 +59,14 @@ export const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route path={paths.HOME} element={<HomePage />} />
-      <Route path={paths.LOGIN} element={<LoginPage />} />
-      <Route path={paths.REGISTER} element={<RegisterPage />} />
+      {/* Для наложения прозрачного фона оборачиваем родительским компонентом нужные нам страницы */}
+      <Route path={paths.HOME} element={<HomePage />}>
+        <Route path={paths.LOGIN} element={<LoginPage />} />
+        <Route path={paths.REGISTER} element={<RegisterPage />} />
+        <Route path={paths.RESET} element={<ResetPage />} />        
+      </Route>
+
       <Route path={paths.COURSE} element={<CoursesPage />} />
-      <Route path={paths.RESET} element={<ResetPage />} />
 
       {/* Приватные маршруты */}
       <Route element={<PrivateRoute />}>
