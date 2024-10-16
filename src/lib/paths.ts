@@ -4,7 +4,7 @@ export const paths = {
   LOGIN: "/login",
   REGISTER: "/register",
   EXIT: "/exit",
-  NOT_FOUND: "/not_found*",
+  NOT_FOUND: "*",
   RESET: "/reset",
   NEWPASSWORD:"/newpassword",
   COURSE:"/course/:id",

@@ -80,7 +80,7 @@ export default function HomePage() {
       <div className="">
         <div id="notification-box" className="flex fixed flex-col items-center justify-center top-0 z-50 p-3"></div>
 
-        <div id="top" className="flex flex-col md:flex-row">
+        <div className="flex flex-col md:flex-row">
           <h1 className="mb-[34px] lg:mb-[50px] lg:max-w-[886px] font-roboto font-medium text-[60px] leading-[60px] md:w-[calc(100% - 308px)] main:w-[850px]">
             Начните заниматься спортом и улучшите качество жизни
           </h1>
@@ -89,7 +89,7 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="flex md:justify-center lg:justify-start flex-wrap md:gap-y-10 gap-x-10">
+        <div id="top" className="flex md:justify-center lg:justify-start flex-wrap md:gap-y-10 gap-x-10">
           {courses.map((course) => {
             let isSubscribed = null;
 
