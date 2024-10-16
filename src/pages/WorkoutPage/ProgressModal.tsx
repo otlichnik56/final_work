@@ -47,11 +47,28 @@ const ProgressModal: React.FC<ProgressModalProps> = ({ workout, onClose, onSave 
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="block w-screen min-h-screen mx-auto my-0">
         <div className="h-screen flex items-center">
-          <div className="block bg-white w-[426px] h-[595.5px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 pr-[30px] pl-[50px] py-[40px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
+          <div className="relative block bg-white w-[426px] h-[595.5px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 pr-[30px] pl-[50px] py-[40px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
+            
+            {/* Кнопка закрытия (крестик) */}
+            <button
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none"
+              onClick={onClose}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
             <div className="text-[32px] font-semibold leading-[35.2px] text-left font-family: StratosSkyeng text-black">
               <h2 className="pb-12">Мой прогресс</h2>
             </div>
-            <div className=" w-[346px] h-[347px] overflow-y-scroll overflow-x-hidden">
+            <div className="w-[346px] h-[347px] overflow-y-scroll overflow-x-hidden">
               <div className="text-lg font-normal text-[black] leading-[19.8px] text-left font-family: Roboto">
                 <div className="max-h-96">
                   {workout.exercises.map((exercise: ExerciseType) => (
