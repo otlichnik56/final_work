@@ -141,8 +141,8 @@ export default function HomePage() {
         </div>
 
         <div className="flex justify-center mx-[auto] w-[140px] mt-[34px] bg-[#BCEC30] rounded-full">
-          <Link to={"#top"}>
-            <Button title="Наверх &#8593;" />
+          <Link to={'#top'}>
+                <Button onClick={() => window.scrollTo({top: 0, behavior: "smooth"})} title="Наверх &#8593;" />
           </Link>
         </div>
       </div>
