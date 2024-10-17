@@ -2,12 +2,14 @@ import { Link } from 'react-router-dom';
 import { Button } from '../Button/Button';
 import WorkoutProgress from '../WorkoutProgress/WorkoutProgress';
 import { CourseType } from '../../types/courses';
+import {ReactNode} from "react";
 
 type CourseCardType = {
+  children?: ReactNode;
   imgURL: string;
   title: string;
   isSubscribed: boolean | null; // Подписан ли пользователь на курс
-  progress?: string;
+  progress?: number;
   courseId: string;
   course?: CourseType;
   onAddCourse: (courseId: string) => void; // Функция для добавления курса
@@ -15,6 +17,7 @@ type CourseCardType = {
 };
 
 export default function CourseCard({
+  children,
   courseId,
   progress,
   isSubscribed,
@@ -37,12 +40,12 @@ export default function CourseCard({
 
   return (
     <Link to={`/course/${courseId}`}
-      className="relative w-[360px] h-[501px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
+      className="relative w-[360px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
       style={{
         padding: '0px 0px 15px 0px',
         gap: '40px',
       }}
-    >
+    > <div className="relative w-[360px] bg-[#FFFFFF] rounded-[30px]">
       <div title="">
         <img
           className="rounded-[30px] h-[325px] w-full object-cover"
@@ -103,7 +106,10 @@ export default function CourseCard({
             </Link>
           </div>
         )}
+
+        {children}
       </div>
+    </div>
     </Link>
   );
 }
