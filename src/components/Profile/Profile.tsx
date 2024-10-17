@@ -227,7 +227,7 @@ export default function Profile() {
                 </div>
 
                 {/* Кнопка "Перейти к курсу" с разными названиями */}
-                <div className="w-full mt-4">
+                <div className="w-full mt-4 mt-[30px]">
                   <Button title={getButtonLabel(progress)} onClick={() => handleGoToCourse(course._id)}/>
                 </div>
               </div>
