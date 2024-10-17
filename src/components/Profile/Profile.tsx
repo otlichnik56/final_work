@@ -10,6 +10,7 @@ import { CourseType } from "../../types/courses"; // Импорт типов к�
 import { WorkoutType } from "../../types/workouts"; // Импорт типов тренировок
 import { Button } from '../../components/Button/Button'; // Импорт кнопки
 import ChangePasswordModal from "../../pages/ProfilePage/ChangePasswordModal";
+import WorkoutProgress from "../WorkoutProgress/WorkoutProgress.tsx";
 
 export default function Profile() {
   const navigate = useNavigate();
@@ -212,24 +213,15 @@ export default function Profile() {
                   title={course.nameRU}
                   onAddCourse={handleAddCourse}    // Передаем функцию добавления
                   onRemoveCourse={handleRemoveCourse} // Передаем функцию удаления
-                />
-                {/* Блок прогресса курса */}
-                <div className="w-11/12">
-                  <p className="text-black text-[18px] font-roboto-400 font-normal mb-[10px]">
-                    {`Прогресс: ${progress} %`}
-                  </p>
-                  <div className="w-auto h-[6px] bg-grayLight  rounded-full ">
-                    <div
-                      className="rounded-full h-[100%] bg-blueLight"
-                      style={{width: progress}}
-                    ></div>
-                  </div>
-                </div>
+                >
+                  {/* Блок прогресса курса */}
+                  <WorkoutProgress title={'Прогресс:'} progress={progress} />
 
-                {/* Кнопка "Перейти к курсу" с разными названиями */}
-                <div className="w-full mt-4 mt-[30px]">
-                  <Button title={getButtonLabel(progress)} onClick={() => handleGoToCourse(course._id)}/>
-                </div>
+                  {/* Кнопка "Перейти к курсу" с разными названиями */}
+                  <div className="w-full mt-4 mt-[30px]">
+                    <Button title={getButtonLabel(progress)} onClick={() => handleGoToCourse(course._id)}/>
+                  </div>
+                </CourseCard>
               </div>
             );
           })}

@@ -56,15 +56,15 @@ const WorkoutPage = () => {
     return <div>Loading...</div>;
   }
 
-  function calculatePercentage(part: number, total: number): string {
+  function calculatePercentage(part: number, total: number): number {
     if (total === 0) {
       throw new Error("Total cannot be zero");
     }
     if (part >= total) {
-      return "100%";
+      return 100;
     }
     const percentage = (part / total) * 100;
-    return Math.round(percentage) + "%";
+    return Math.round(percentage);
   }
 
   return (
