@@ -20,7 +20,8 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     const getDataCourses = async () => {
-      if (coursesContext) { // Проверка на наличие контекста
+      if (coursesContext) {
+        // Проверка на наличие контекста
         coursesContext.setLoading(true);
         try {
           const res = await getCourses();
@@ -37,7 +38,8 @@ export const AppRoutes = () => {
 
   useEffect(() => {
     const getDataWorkouts = async () => {
-      if (workoutsContext) { // Проверка на наличие контекста
+      if (workoutsContext) {
+        // Проверка на наличие контекста
         workoutsContext.setLoading(true);
         try {
           const res = await getWorkouts();
@@ -63,17 +65,22 @@ export const AppRoutes = () => {
       <Route path={paths.HOME} element={<HomePage />}>
         <Route path={paths.LOGIN} element={<LoginPage />} />
         <Route path={paths.REGISTER} element={<RegisterPage />} />
-        <Route path={paths.RESET} element={<ResetPage />} />        
+        <Route path={paths.RESET} element={<ResetPage />} />
       </Route>
 
       <Route path={paths.COURSE} element={<CoursesPage />} />
 
       {/* Приватные маршруты */}
       <Route element={<PrivateRoute />}>
-        <Route path={paths.WORKOUT + '/:workoutId'} element={<WorkoutPage />} />
-        <Route path={paths.WORKOUT_SELECT + '/:courseId'} element={<WorkoutSelectPage />} />
-        <Route path={paths.PROFILE} element={<ProfilePage />} />
+        <Route path={paths.PROFILE} element={<ProfilePage />} >
+        <Route
+          path={paths.WORKOUT_SELECT + "/:courseId"}
+          element={<WorkoutSelectPage />}
+        />
+        </Route>
+
       </Route>
+      <Route path={paths.WORKOUT + "/:workoutId"} element={<WorkoutPage />} />
     </Routes>
   );
 };

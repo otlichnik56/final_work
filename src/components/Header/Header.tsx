@@ -73,8 +73,8 @@ export default function Header() {
 
         {/* Выпадающий блок */}
         {isOpen && (
-          <div className="absolute top-10 right-10 mt-2 bg-white rounded-lg shadow-lg p-4 z-10" style={{ height: "258px", width: "266px" }}>
-            <div className="text-center">
+          <div className="absolute top-10 right-10 mt-2 bg-white rounded-[30px] shadow-lg p-4 z-10" style={{ height: "258px", width: "266px" }}>
+            <div className="text-center mt-[20px]">
               <p className="font-semibold text-lg">{userData.name}</p>
               <p className="text-gray-500 text-sm">{userData.email}</p>
             </div>

@@ -7,5 +7,5 @@ export const paths = {
   RESET: "/reset",
   COURSE:"/course/:id",
   WORKOUT: "/workout",
-  WORKOUT_SELECT: "/workout_select"
+  WORKOUT_SELECT: "/profile/workout_select"
 }

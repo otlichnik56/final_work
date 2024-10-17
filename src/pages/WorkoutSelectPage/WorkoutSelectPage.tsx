@@ -69,7 +69,7 @@ function WorkoutSelectPage() {
 
   return (
     <div className="w-full h-full overflow-x-hidden bg-[#eaeef6]">
-      <div className="block w-screen min-h-screen mx-auto my-0">
+      <div className="w-full min-w-[375px] h-full min-h-screen absolute z-[6] left-0 top-0 bg-[rgba(0,0,0,0.4)]">
         <div className="h-screen flex items-center">
           <div className="relative flex flex-col items-center bg-white w-[460px] h-[609px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[40px] py-[40px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5] gap-[34px]">
             

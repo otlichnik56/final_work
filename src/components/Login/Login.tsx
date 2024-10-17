@@ -48,6 +48,7 @@ const Login = () => {
       navigate(paths.HOME);
     } catch (error: any) {
       setError("Пароль введён не верно, попробуйте ещё раз.");
+      setErrorPassword(true);
     }
   };
 
