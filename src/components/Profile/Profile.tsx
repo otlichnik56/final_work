@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import {useContext, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { paths } from "../../lib/paths";
 import { UserContext } from "../../context/UserContext"; // Импорт контекста пользователя
@@ -214,12 +214,21 @@ export default function Profile() {
                   onRemoveCourse={handleRemoveCourse} // Передаем функцию удаления
                 />
                 {/* Блок прогресса курса */}
-                <div className="text-center text-lg text-black mt-4">
-                  Прогресс: {progress}%
+                <div className="w-11/12">
+                  <p className="text-black text-[18px] font-roboto-400 font-normal mb-[10px]">
+                    {`Прогресс: ${progress} %`}
+                  </p>
+                  <div className="w-auto h-[6px] bg-grayLight  rounded-full ">
+                    <div
+                      className="rounded-full h-[100%] bg-blueLight"
+                      style={{width: progress}}
+                    ></div>
+                  </div>
                 </div>
+
                 {/* Кнопка "Перейти к курсу" с разными названиями */}
                 <div className="w-full mt-4">
-                  <Button title={getButtonLabel(progress)} onClick={() => handleGoToCourse(course._id)} />
+                  <Button title={getButtonLabel(progress)} onClick={() => handleGoToCourse(course._id)}/>
                 </div>
               </div>
             );
