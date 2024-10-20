@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '../Button/Button';
 import WorkoutProgress from '../WorkoutProgress/WorkoutProgress';
 import { CourseType } from '../../types/courses';
-import {ReactNode} from "react";
+import { ReactNode } from 'react';
 
 type CourseCardType = {
   children?: ReactNode;
@@ -26,7 +26,6 @@ export default function CourseCard({
   onAddCourse,
   onRemoveCourse,
 }: CourseCardType) {
-
   // Обработчик клика по иконке добавления/удаления курса
   const handleSubscriptionClick = (e: React.MouseEvent) => {
     e.preventDefault(); // Останавливаем переход по ссылке
@@ -39,21 +38,22 @@ export default function CourseCard({
   };
 
   return (
-    <Link to={`/course/${courseId}`}
-      className="relative w-[360px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
+    <div className="relative w-[360px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
       style={{
         padding: '0px 0px 15px 0px',
         gap: '40px',
       }}
-    > <div className="relative w-[360px] bg-[#FFFFFF] rounded-[30px]">
-      <div title="">
-        <img
-          className="rounded-[30px] h-[325px] w-full object-cover"
-          src={`/img/${imgURL}.png`}
-          alt={title}
-          width={360}
-          height={325}
-        />
+    >
+      <div className="relative w-[360px] bg-[#FFFFFF] rounded-[30px]">
+        <Link to={`/course/${courseId}`}>
+          <img
+            className="rounded-[30px] h-[325px] w-full object-cover"
+            src={`/img/${imgURL}.png`}
+            alt={title}
+            width={360}
+            height={325}
+          />
+        </Link>
 
         {/* Проверка на null перед рендерингом блока с isSubscribed */}
         {isSubscribed !== null && (
@@ -67,8 +67,8 @@ export default function CourseCard({
             </g>
           </svg>
         )}
-
       </div>
+
       <div className="flex flex-col px-[30px] pt-6 pb-4 gap-y-[18px]">
         <h2 className="font-roboto-500 text-[24px] lg:text-[28px] leading-8">
           {title}
@@ -110,6 +110,5 @@ export default function CourseCard({
         {children}
       </div>
     </div>
-    </Link>
   );
 }
