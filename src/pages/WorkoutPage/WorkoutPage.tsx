@@ -71,10 +71,7 @@ const WorkoutPage = () => {
     <Wrapper>
       <HeaderProfile />
       <section>
-        <h1 className="font-roboto-500 text-2xl lg:text-6xl font-medium text-black mb-4 lg:mb-6">
-          Тренировка
-        </h1>
-        <p className="text-black text-[32px] font-roboto-400 font-normal mb-4 lg:mb-10">
+        <p className="text-black text-[24px] md:text-[32px] font-roboto-400 font-normal mb-4 lg:mb-10">
           {workout.name}
         </p>
         <div className="h-[189px] md:h-[639px] rounded-[30px] mb-6 lg:mb-10">
@@ -118,13 +115,13 @@ const WorkoutPage = () => {
       {/* Модальное окно для подтверждения прогресса */}
       {isConfirmModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="block bg-white w-[426px] h-[278px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 pr-[30px] pl-[50px] py-[40px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
+          <div className="block bg-white w-[343px] md:w-[426px] h-[278px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 pr-[30px] pl-[50px] py-[40px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
             <div>
               <h1 className="text-[40px] pb-[34px] text-[black] font-semibold leading-[48px] text-center font-family: StratosSkyeng">
                 Ваш прогресс засчитан!
               </h1>
             </div>
-            <div className="w-[346px] h-[96px] ">
+            <div className="w-full md:w-[346px] h-[96px] ">
               <img
                 onClick={() => setConfirmModalOpen(false)}
                 className="mx-auto"

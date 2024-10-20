@@ -153,7 +153,7 @@ export default function CoursesPage() {
         </section>
 
         <section className="">
-          <div className="mt-[116px] w-full shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] bg-white rounded-[30px] flex relative md:mt-[62px]">
+          <div className="mt-[116px] w-full shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] bg-white rounded-[30px] flex relative md:mt-[130px]">
             <div className="md:m-[40px] m-[30px] flex flex-col gap-[28px] md:w-[437px]">
               <p className="md:text-[60px] text-[32px] font-medium md:leading-[60px] leading-[35.2px]">Начните путь <br /> к новому телу</p>
               <ul className="list-inside list-disc">
@@ -190,7 +190,7 @@ export default function CoursesPage() {
             </div>
             <div
               className="absolute h-[575px] w-[628px] bg-[url('/img/runner.svg')] hidden md:block"
-              style={{ top: '40.5%', left: '72%', transform: 'translate(-50%, -50%)' }}
+              style={{ top: '29%', left: '72%', transform: 'translate(-50%, -50%)' }}
             ></div>
           </div>
         </section>
