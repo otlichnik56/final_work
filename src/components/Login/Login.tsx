@@ -1,6 +1,6 @@
 import { paths } from "../../lib/paths";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { loginUser } from "../../api/apiUser";
 import { useUser } from "../../hooks/useUser";
 import React from "react";
@@ -11,11 +11,25 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null);
   const [errorLogin, setErrorLogin] = useState(false);
   const [errorPassword, setErrorPassword] = useState(false);
+  const [isModalVisible, setModalVisible] = useState(true);
 
   const [formValues, setFormValues] = useState({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    if (isModalVisible) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isModalVisible]);
+  
 
   const onInputChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { name, value } = event.target;
@@ -46,6 +60,7 @@ const Login = () => {
       setError(null);
       setUser(response);
       navigate(paths.HOME);
+      setModalVisible(false);
     } catch (error: any) {
       setError("Пароль введён не верно, попробуйте ещё раз.");
       setErrorPassword(true);
@@ -54,9 +69,9 @@ const Login = () => {
 
   return (
     <div className="w-full h-full overflow-x-hidden bg-[#eaeef6]">
-      <div className="w-full min-w-[375px] h-full min-h-screen absolute z-[6] left-0 top-0 bg-[rgba(0,0,0,0.4)]">
+      <div className="w-full min-w-[375px]  h-full min-h-screen absolute z-[6] left-0 top-0 bg-[rgba(0,0,0,0.4)]">
         <div className="h-screen flex items-center">
-          <div className="relative block bg-white w-[360px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[60px] py-[50px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
+          <div className="relative block bg-white w-[343px] md:w-[360px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[60px] py-[50px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
 
             {/* Кнопка закрытия (крестик) */}
             <button
@@ -119,7 +134,7 @@ const Login = () => {
                 </>
               )}
               <button
-                className="w-[280px] h-[52px] bg-[#BCEC30] flex items-center justify-center text-sm leading-[19.8px] font-normal tracking-[-0.14px] text-black mt-8 mb-2.5 rounded-[46px] border-[none]
+                className="w-[280px] h-[52px] bg-[#BCEC30] flex items-center justify-center text-lg leading-[19.8px] font-normal tracking-[-0.14px] text-black mt-8 mb-2.5 rounded-[46px] border-[none]
   outline: none hover:border-[none] hover:bg-[#C6FF00] active:bg-[#000000] active:text-white"
                 id="btnEnter"
                 type="submit"
@@ -128,7 +143,7 @@ const Login = () => {
               </button>
               <div className="text-center">
                 <Link
-                  className="h-[52px] w-[280px] border-solid border border-black text-black flex items-center justify-center bg-white rounded-[46px] hover:bg-[#F7F7F7] active:bg-[#E9ECED]"
+                  className="h-[52px] w-[280px] border-solid text-lg border border-black text-black flex items-center justify-center bg-white rounded-[46px] hover:bg-[#F7F7F7] active:bg-[#E9ECED]"
                   id="btnEnter"
                   type="button"
                   to={paths.REGISTER}

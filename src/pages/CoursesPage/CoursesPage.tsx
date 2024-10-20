@@ -104,13 +104,13 @@ export default function CoursesPage() {
           className="flex fixed flex-col items-center justify-center top-0 z-50 p-3"
         ></div>
         <section
-          className={`flex flex-row justify-end md:justify-between w-auto h-[330px] lg:h-[310px] rounded-[30px] ${color} overflow-hidden`}
+          className={`flex flex-row justify-end md:justify-between w-auto h-[325px] md:h-[330px] lg:h-[310px] rounded-[30px] ${color} overflow-hidden`}
         >
           <h1 className="font-roboto-500 hidden md:text-4xl lg:text-6xl  md:block font-medium text-white mb-[10px] pt-[40px] pl-[40px]">
             {course?.nameRU}
           </h1>
           <img
-            className="w-[343px] h-[330px] lg:w-[360px] lg:h-[330px]"
+            className="h-[325px] w-full object-cover lg:w-[360px] lg:h-[330px]"
             src={`/img/${course?.nameEN}.png`}
             alt={course?.nameEN}
           />
@@ -132,81 +132,66 @@ export default function CoursesPage() {
           </div>
         </section>
 
-        <section className="z-10">
-          <h2 className="font-roboto-500 font-semibold text-black text-4xl md:text-5xl mb-[24px] lg:mb-[40px]">
+        <section className="relative">
+          <h2 className="font-roboto-500 font-semibold text-black text-4xl text-[24px] md:text-5xl mb-[24px] lg:mb-[40px]">
             Направления
           </h2>
           <ul className="bg-lime rounded-[30px] flex flex-col gap-y-[20px] lg:flex-row flex-wrap md:gap-y-[22px] p-[30px]">
             {course?.directions.map((el, i) => (
               <li
                 key={i}
-                className="md:w-1/3 before:content-['\2726'] font-roboto-500 text-lg xl:text-2xl text-black"
+                className="md:w-1/3 before:content-['\2726'] font-roboto-400 text-lg xl:text-2xl text-black"
               >
-                <span className="relative left-2">{el}</span>
+                <span className="pl-[8px] md:text-[24px] text-[18px] font-normal md:leading-[26.4px] leading-[19.8px] text-left">{el}</span>
               </li>
             ))}
           </ul>
+          <div
+            className=" zIndex: 1 absolute h-[456px] w-[100vw] bg-[url('/img/runnerMobile.svg')] md:hidden"
+            style={{ top: '160%', left: '50%', transform: 'translate(-50%, -50%)' }}
+          ></div>
         </section>
 
-        <section className="z-10 mt-[156px] xl:mt-[102px] md:mt-[256px]">
-          <div className="rounded-[30px] p-[40px] md:p-[30px] lg:p-10 bg-white shadow-def">
-            <div className="max-w-[465px] flex flex-col xl:relative xl:z-20">
-              <h2 className="text-[60px] md:text-5xl text-black font-roboto-500 font-semibold leading-none mb-[28px]">
-                Начните путь <br /> к новому телу
-              </h2>
-              <div className="mb-[28px] h-[178px] relative">
-                <ul className="flex flex-col list-inside">
-                  <li className="list-disc space-y-3 font-roboto-400 text-[#585959] leading-none text-lg md:text-2xl md:pl-6">
-                    проработка всех групп мышц
-                  </li>
-                  <li className="list-disc space-y-3 font-roboto-400 text-[#585959] leading-none text-lg md:text-2xl md:pl-6">
-                    тренировка суставов
-                  </li>
-                  <li className="list-disc space-y-3 font-roboto-400 text-[#585959] leading-none text-lg md:text-2xl md:pl-6">
-                    улучшение циркуляции крови
-                  </li>
-                  <li className="list-disc space-y-3 font-roboto-400 text-[#585959] leading-none text-lg md:text-2xl md:pl-6">
-                    упражнения заряжают бодростью
-                  </li>
-                  <li className="list-disc space-y-3 font-roboto-400 text-[#585959] leading-none text-lg md:text-2xl md:pl-6">
-                    помогают противостоять стрессам
-                  </li>
-                </ul>
+        <section className="">
+          <div className="mt-[116px] w-full shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] bg-white rounded-[30px] flex relative md:mt-[62px]">
+            <div className="md:m-[40px] m-[30px] flex flex-col gap-[28px] md:w-[437px]">
+              <p className="md:text-[60px] text-[32px] font-medium md:leading-[60px] leading-[35.2px]">Начните путь <br /> к новому телу</p>
+              <ul className="list-inside list-disc">
+                <li className="md:text-[24px] text-[18px] font-normal md:leading-[35px] leading-[25px] text-[#666666]">
+                  проработка всех групп мышц
+                </li>
+                <li className="md:text-[24px] text-[18px] font-normal md:leading-[35px] leading-[25px] text-[#666666]">
+                  тренировка суставов
+                </li>
+                <li className="md:text-[24px] text-[18px] font-normal md:leading-[35px] leading-[25px] text-[#666666]">
+                  улучшение циркуляции крови
+                </li>
+                <li className="md:text-[24px] text-[18px] font-normal md:leading-[35px] leading-[25px] text-[#666666]">
+                  упражнения заряжают бодростью
+                </li>
+                <li className="md:text-[24px] text-[18px] font-normal md:leading-[35px] leading-[25px] text-[#666666]">
+                  помогают противостоять стрессам
+                </li>
+              </ul>
+              {/* Проверяем, есть ли курс у пользователя */}
+              {(!isCourseInUserData && userData) && (
+                <Button
+                  title="Добавить курс"
+                  onClick={handleButtonClick} // Логика добавления курса или перехода на страницу входа
+                />
+              )}
 
-                <div className="mt-[28px]"></div>
-
-                  {/* Проверяем, есть ли курс у пользователя */}
-                  {(!isCourseInUserData && userData) && (
-                    <Button
-                      title="Добавить курс"
-                      onClick={handleButtonClick} // Логика добавления курса или перехода на страницу входа
-                    />
-                  )}
-
-                  {!userData && (
-                    <Button
-                      title="Войдите чтобы добавить"
-                      onClick={() => navigate(paths.LOGIN)} // Перенаправление на страницу логина
-                    />
-                  )}
-                </div>
-                
-          </div>
-
-            <div
-              className="relative xl:z-10 -z-10 flex justify-end
-              xl:bottom-[550px] md:bottom-[730px] bottom-[700px]
-              lg:left-[30px] md:left-[0px] left-[60px]"
-            >
-              <img
-                className="[clip:rect(auto,auto,390px,auto)] lg:[clip:rect(auto,auto,450px,auto)] right-[35px] top-[195px]
-                md:-right-[10px] md:top-[140px] absolute
-                xl:-right-[40px] xl:top-[140px] lg:-right-[30px] lg:top-[130px]"
-                src="/img/lines.svg"
-                alt="green and black line"
-              />
-              <img className="absolute w-[519px] h-[543px]" src="/img/runner.png" alt="runner" />
+              {!userData && (
+                <Button
+                  title="Войдите чтобы добавить"
+                  onClick={() => navigate(paths.LOGIN)} // Перенаправление на страницу логина
+                />
+              )}
             </div>
+            <div
+              className="absolute h-[575px] w-[628px] bg-[url('/img/runner.svg')] hidden md:block"
+              style={{ top: '40.5%', left: '72%', transform: 'translate(-50%, -50%)' }}
+            ></div>
           </div>
         </section>
       </Wrapper>

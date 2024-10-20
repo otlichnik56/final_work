@@ -58,7 +58,7 @@ export default function Header() {
           />
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center space-x-2"
+            className="hidden md:flex items-center space-x-2"
           >
             <span className="text-lg font-semibold">
               {userData.name || "Пользователь"}
