@@ -1,0 +1,47 @@
+@tailwind base;
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 10px;
+  border: 3px solid var(--primary);
+}
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/public/fonts/Roboto-Regular.ttf) format("ttf");
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url(/public/fonts/Roboto-Medium.ttf) format("ttf");
+  }
+}
+
+:root {
+    --primary: white; /* Изменить на основной цвет */
+    --secondary: black; /* Изменить на вторичный цвет */
+}

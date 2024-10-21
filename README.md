@@ -1,50 +1,43 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ # "SkyFitnessPro: приложение для фитнеса"
 
-Currently, two official plugins are available:
+Проект для домашних тренировок, таких как йога, стетчинг, стэп-аэробика, бодифлекс, танцевальный фитнес
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Шаблон
 
-## Expanding the ESLint configuration
+Проект реализован на основе шаблона (https://www.figma.com/design/2Vhk2Zdii1eM7rA0fWQExv/SkyFitnessPro?node-id=0-1&node-type=canvas&t=N9gKTxcF3INdRGdu-0).
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Как запустить проект
 
-- Configure the top-level `parserOptions` property like this:
+- Установить зависимость командой `npm i`
+- Команда для запуска проекта `npm run dev`
+- Открыть проект в браузере
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Стек и инструменты
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Проект сделан на React + TypeScript используя tsx шаблоны.
+Для стилей в коде используются Tailwind CSS.
+Все компоненты разбиты по отдельным папкам.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Функционал
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Реализована регистрация пользователя и авторизация. В случае утери пароля, пользователь может его восстановить, получив уведомление о полученном письме на электронную почту о новом пароле.
+Реализована форма для смены пароля из страницы профиля. На странице профиля отображается текущий e-mail и пароль.
+Реализована логика добавления и удаления курса со страницы.
+Реализована логика сохранения прогресса тренировки.
+
+
+
+### Чек лист
+
+Страница курсов (главная).
+   На странице отображены все курсы, имеющиеся в базе данных. Курсы отображаются вне зависимости от статуса авторизации. При нажатии на кнопку «Наверх» происходит скролл в самое начало страницы.
+Страница авторизации/регистрации.
+   На странице пользователь имеет возможность войти в приложение или зарегистрироваться. Если данные были введены некорректно, пользователю показываются ошибки ввода.
+Страница отдельного курса.
+   По клику на выбранный курс неавторизованный пользователь или пользователь, не приобретавший данный курс, попадает на страницу, где может ознакомиться с его описанием. Если пользователь авторизован, то ему будет предложено добавить курс, иначе будет выведено предложение авторизоваться.
+Страница профиля.
+   На странице «Мой профиль» пользователь может просматривать и редактировать свои данные (сменить пароль). Также у пользователя есть возможность ознакомиться с приобретенными курсами и начать тренировку.
+Страница тренировки.
+По клику на выбранную тренировку в своем профиле пользователь попадает на страницу, где может открывать материалы урока (видеоролики на ютубе). У каждого урока есть определенные задания и возможность заполнить свой прогресс.
