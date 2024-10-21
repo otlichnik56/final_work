@@ -39,11 +39,13 @@ export default function SelectionPage() {
 
   return (
     <div className="relative">
+      {/* Модальное окно */}
       <div className="fixed top-[116px] md:top-[183px] left-[calc(50%-(343px/2))] md:left-[calc(50%-(460px/2))] bg-white rounded-[30px] shadow-def w-[343px] md:w-[460px] p-[30px] md:p-[40px]">
         <h2 className="font-skyeng text-[32px] leading-[110%] text-center mb-[34px] md:mb-[48px]">
           Выберите тренировку
         </h2>
 
+        {/* Прокрутка только для списка */}
         <ul className="max-h-[360px] mb-[34px] overflow-y-scroll">
           {workouts.map((workout) => {
             const shortWorkoutName = workout.name.split("/")[0];

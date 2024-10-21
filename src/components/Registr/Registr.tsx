@@ -1,6 +1,6 @@
 import { paths } from "../../lib/paths";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { regUser } from "../../api/apiUser.js";
 import { useUser } from "../../hooks/useUser";
 
@@ -16,11 +16,24 @@ export default function RegisterPage() {
     username: "",
     password: "",
   });
+  
 
   const [error, setError] = useState<string | null>(null);
 
   // Новое состояние для управления видимостью модального окна
   const [isModalVisible, setModalVisible] = useState(true);
+
+  useEffect(() => {
+    if (isModalVisible) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isModalVisible]);
 
   const onInputChange: React.ComponentProps<"input">["onChange"] = (event) => {
     const { name, value } = event.target;
@@ -78,8 +91,8 @@ export default function RegisterPage() {
     <div className="w-full h-full overflow-x-hidden bg-[#eaeef6]">
       <div className="w-full min-w-[375px] h-full min-h-screen absolute z-[6] left-0 top-0 bg-[rgba(0,0,0,0.4)]">
         <div className="h-screen flex items-center">
-          <div className="relative block bg-white w-[360px] h-[487px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[60px] pt-[50px] pb-[35px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
-            
+          <div className="relative block bg-white w-[343px] md:w-[360px]  h-[487px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 px-[60px] pt-[50px] pb-[35px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
+
             {/* Кнопка закрытия (крестик) */}
             <button
               className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 focus:outline-none"
@@ -106,9 +119,8 @@ export default function RegisterPage() {
             >
               <div className="gap-2.5">
                 <input
-                  className={`h-[52px] w-[280px] gap-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid ${
-                    errorLogin ? "border-rose-600" : "border-[rgba(148,166,190,0.4)]"
-                  } placeholder:font-normal placeholder:text-lg 
+                  className={`h-[52px] w-[280px] gap-2.5 px-[18px] mb-2.5 py-4 rounded-lg border-[0.7px] border-solid ${errorLogin ? "border-rose-600" : "border-[rgba(148,166,190,0.4)]"
+                    } placeholder:font-normal placeholder:text-lg 
                  placeholder:text-[#94a6be] focus:outline-none`}
                   type="text"
                   value={formValues.email}
@@ -119,9 +131,8 @@ export default function RegisterPage() {
                 />
 
                 <input
-                  className={`h-[52px] w-[280px] mb-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid ${
-                    errorName ? "border-rose-600" : "border-[rgba(148,166,190,0.4)]"
-                  } placeholder:font-normal placeholder:text-lg 
+                  className={`h-[52px] w-[280px] mb-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid ${errorName ? "border-rose-600" : "border-[rgba(148,166,190,0.4)]"
+                    } placeholder:font-normal placeholder:text-lg 
                  placeholder:text-[#94a6be] focus:outline-none`}
                   type="text"
                   name="username"
@@ -132,9 +143,8 @@ export default function RegisterPage() {
                 />
 
                 <input
-                  className={`h-[52px] w-[280px] gap-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid ${
-                    errorPassword ? "border-rose-600" : "border-[rgba(148,166,190,0.4)]"
-                  } placeholder:font-normal placeholder:text-lg 
+                  className={`h-[52px] w-[280px] gap-2.5 px-[18px] py-4 rounded-lg border-[0.7px] border-solid ${errorPassword ? "border-rose-600" : "border-[rgba(148,166,190,0.4)]"
+                    } placeholder:font-normal placeholder:text-lg 
                  placeholder:text-[#94a6be] focus:outline-none`}
                   type="password"
                   value={formValues.password}
@@ -147,7 +157,7 @@ export default function RegisterPage() {
 
               {error && <p className="text-rose-600 text-center">{error}</p>}
               <button
-                className="w-[280px] h-[52px] bg-[#BCEC30] flex items-center justify-center text-sm leading-[19.8px] font-normal tracking-[-0.14px] text-black mt-8 mb-2.5 rounded-[46px] border-none
+                className="w-[280px] h-[52px] bg-[#BCEC30] flex items-center justify-center text-lg leading-[19.8px] font-normal tracking-[-0.14px] text-black mt-8 mb-2.5 rounded-[46px] border-none
   outline-none hover:bg-[#C6FF00] active:bg-[#000000] active:text-white"
                 id="btnEnter"
                 type="submit"
@@ -156,7 +166,7 @@ export default function RegisterPage() {
               </button>
 
               <Link
-                className="h-[52px] w-[280px] border-solid border border-black text-black flex items-center justify-center bg-white rounded-[46px] hover:bg-[#F7F7F7] active:bg-[#E9ECED]"
+                className="h-[52px] w-[280px] text-lg border-solid border border-black text-black flex items-center justify-center bg-white rounded-[46px] hover:bg-[#F7F7F7] active:bg-[#E9ECED]"
                 id="btnEnter"
                 to={paths.LOGIN}
               >

@@ -38,13 +38,14 @@ export default function CourseCard({
   };
 
   return (
-    <div className="relative w-[360px] bg-[#FFFFFF] rounded-[30px] hover:scale-104 duration-300 hover:shadow-lg"
+    <div className="relative w-[343px] md:w-[360px] bg-[#FFFFFF] rounded-[30px] md:shadow-none shadow-lg md:hover:scale-104 duration-300 md:hover:shadow-lg"
       style={{
         padding: '0px 0px 15px 0px',
         gap: '40px',
+        marginBottom: '24px'
       }}
     >
-      <div className="relative w-[360px] bg-[#FFFFFF] rounded-[30px]">
+      <div className="relative w-[343px] md:w-[360px] bg-[#FFFFFF] rounded-[30px">
         <Link to={`/course/${courseId}`}>
           <img
             className="rounded-[30px] h-[325px] w-full object-cover"

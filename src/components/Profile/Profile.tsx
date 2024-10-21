@@ -153,30 +153,30 @@ export default function Profile() {
 
   return (
     <div className="">
-      <h1 className="text-[40px] font-semibold leading-[44px] text-left text-[#000000]">
+      <h1 className="text-[24px] md:text-[40px] font-semibold leading-[26px] md:leading-[44px] text-left text-[#000000]">
         Профиль
       </h1>
       <div className="w-[Fixed_(1,160px)px] h-[Hug_(257px)px] gap-2.5 opacity-[0px] pt-[30px] pb-0 rounded-[30px_0px_0px_0px]">
-        <div className="w-[Fixed_(1,160px)px] h-[Hug_(257px)px] bg-[#ffffff] pt-[25px] cursor-pointer hover:scale-104 duration-300 hover:shadow-lg pl-[25px] rounded-[30px_30px_30px_30px] flex flex-row">
+        <div className="items-center w-[Fixed_(1,160px)px] h-[Hug_(257px)px] p-[30px] bg-[#ffffff] md:pt-[25px] duration-300 shadow-lg md:pl-[25px] rounded-[30px_30px_30px_30px] gap-[30px] flex flex-col md:flex-row">
           <img
             src="/img/no_foto.png"
             className="bg-[#ffffff] w-[197px] h-[197px]"
             alt="Profile"
           />
-          <div className="pl-[30px]  w-[394px] h-[197px] ">
-            <p className="text-[32px] font-medium leading-[35.2px] pb-[20px] text-[#000000] text-left font-family: Roboto">
+          <div className="md:w-[394px] md:h-[197px] w-full flex flex-col">
+            <p className="text-[24px] md:text-[32px] font-medium leading-[26px] md:leading-[35.2px] pb-[20px] text-[#000000] text-left font-family: Roboto">
               {userData.name || "Пользователь"}
             </p>
 
-            <p className="text-lg font-normal leading-[19.8px] text-left text-[black] pb-2.5">
+            <p className="md:text-lg text-[16px] font-normal leading-[17px] md:leading-[19.8px] text-left text-[black] pb-2.5">
               Логин: {userData.email || "Логин"}
             </p>
-            <p className="text-lg font-normal leading-[19.8px] text-left text-[black]">
+            <p className="md:text-lg font-normal text-[16px] leading-[17px] md:leading-[19.8px] text-left text-[black]">
               Пароль: {userData.password || "Пароль"}
             </p>
-            <div className="flex pt-[20px] gap-2.5 ">
+            <div className="flex flex-col md:flex-row pt-[20px] gap-2.5 ">
               <button
-                className="w-[192px] h-[52px] bg-[#BCEC30] flex items-center justify-center text-sm leading-[19.8px] font-normal tracking-[-0.14px] text-black rounded-[46px] border-[none]
+                className="md:w-[192px] w-full h-[52px] bg-[#BCEC30] flex items-center justify-center text-sm leading-[19.8px] font-normal tracking-[-0.14px] text-black rounded-[46px] border-[none]
   outline: none hover:border-[none] hover:bg-[#C6FF00] active:bg-[#000000] active:text-white"
                 id="btnEnter"
                 type="button"
@@ -185,7 +185,7 @@ export default function Profile() {
                 Изменить пароль
               </button>
               <button
-                className="h-[52px] w-[192px] border-solid border border-black text-black flex items-center justify-center bg-white rounded-[46px] hover:bg-[#F7F7F7] active:bg-[#E9ECED]"
+                className="h-[52px] md:w-[192px] w-full border-solid border border-black text-black flex items-center justify-center bg-white rounded-[46px] hover:bg-[#F7F7F7] active:bg-[#E9ECED]"
                 id="btnEnter"
                 onClick={handleLogout} // Выход пользователя
               >
