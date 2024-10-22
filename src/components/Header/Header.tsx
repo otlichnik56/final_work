@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import logoImg from "/public/img/logo.svg";
+import logoImg from "/img/logo.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext"; // Импорт контекста
 import ButtonHeader from "../ButtonHeader/ButtonHeader";
@@ -45,7 +45,7 @@ export default function Header() {
     <div className="relative flex justify-between mx-auto py-10 md:pt-[50px] md:pb-14 lg:max-w-[1440px] w-full main:px-[140px]">
       <div>
         <Link to="/">
-          <img src="/public/img/logo.svg" className="w-[220px] h-[35px]" alt="logo" />
+          <img src="/img/logo.svg" className="w-[220px] h-[35px]" alt="logo" />
         </Link>
       </div>
 

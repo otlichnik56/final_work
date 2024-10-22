@@ -200,7 +200,7 @@ export default function Profile() {
           Мои курсы
         </h2>
 
-        <div className="flex md:justify-center lg:justify-start flex-wrap md:gap-y-10 gap-x-10">
+        <div className="flex justify-center lg:justify-start flex-wrap md:gap-y-10 gap-x-10">
           {userCourses && userCourses.map((course) => {
             const progress = parseFloat(calculateCourseProgress(course));
             return (

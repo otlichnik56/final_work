@@ -114,7 +114,7 @@ export default function HomePage() {
 
         <div
           id="top"
-          className="flex md:justify-center lg:justify-start flex-wrap md:gap-y-10 gap-x-10"
+          className="flex justify-center lg:justify-start flex-wrap md:gap-y-10 gap-x-10"
         >
           {courses.map((course) => {
             let isSubscribed = null;

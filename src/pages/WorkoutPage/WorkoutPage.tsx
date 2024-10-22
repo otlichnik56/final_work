@@ -45,6 +45,11 @@ const WorkoutPage = () => {
           //console.log("Прогресс успешно обновлен");
           setModalOpen(false); // Закрываем основное окно прогресса
           setConfirmModalOpen(true); // Открываем окно подтверждения
+
+          // Устанавливаем таймер для автоматического закрытия модального окна через 1 секунду
+          setTimeout(() => {
+            setConfirmModalOpen(false);
+          }, 2000); // 1000 миллисекунд = 1 секунда
         }
       } catch (error) {
         console.error("Ошибка при обновлении прогресса:", error);
@@ -115,13 +120,31 @@ const WorkoutPage = () => {
       {/* Модальное окно для подтверждения прогресса */}
       {isConfirmModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="block bg-white w-[343px] md:w-[426px] h-[278px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 pr-[30px] pl-[50px] py-[40px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
+          <div className="relative bg-white w-[343px] md:w-[426px] h-[278px] shadow-[0px_4px_67px_-12px_rgba(0,0,0,0.13)] mx-auto my-0 pr-[30px] pl-[50px] py-[40px] rounded-[30px] border-[0.7px] border-solid border-[#d4dbe5]">
+            
+            {/* Кнопка с крестиком для закрытия модального окна */}
+            <button
+              onClick={() => setConfirmModalOpen(false)}
+              className="absolute top-4 right-4 text-black text-[24px] font-bold leading-none"
+              aria-label="Закрыть"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            
             <div>
               <h1 className="text-[40px] pb-[34px] text-[black] font-semibold leading-[48px] text-center font-family: StratosSkyeng">
                 Ваш прогресс засчитан!
               </h1>
             </div>
-            <div className="w-full md:w-[346px] h-[96px] ">
+            <div className="w-full md:w-[346px] h-[96px]">
               <img
                 onClick={() => setConfirmModalOpen(false)}
                 className="mx-auto"
